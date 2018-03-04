@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Whiteparse", "Whiteparse\Whiteparse.csproj", "{D71B9E96-F30B-4BCD-BE62-8AA3A390E21E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Whiteparse.Test", "Whiteparse.Test\Whiteparse.Test.csproj", "{572B7091-B595-4CB7-AC42-14CA4D5E4C35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Whiteparse.Examples", "Whiteparse.Examples\Whiteparse.Examples.csproj", "{8CA48723-A35E-4DED-B178-A8594A5DBF13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D71B9E96-F30B-4BCD-BE62-8AA3A390E21E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D71B9E96-F30B-4BCD-BE62-8AA3A390E21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D71B9E96-F30B-4BCD-BE62-8AA3A390E21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D71B9E96-F30B-4BCD-BE62-8AA3A390E21E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{572B7091-B595-4CB7-AC42-14CA4D5E4C35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{572B7091-B595-4CB7-AC42-14CA4D5E4C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{572B7091-B595-4CB7-AC42-14CA4D5E4C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{572B7091-B595-4CB7-AC42-14CA4D5E4C35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CA48723-A35E-4DED-B178-A8594A5DBF13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CA48723-A35E-4DED-B178-A8594A5DBF13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CA48723-A35E-4DED-B178-A8594A5DBF13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CA48723-A35E-4DED-B178-A8594A5DBF13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
