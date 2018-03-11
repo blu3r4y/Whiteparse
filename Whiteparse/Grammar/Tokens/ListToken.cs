@@ -35,7 +35,8 @@ namespace Whiteparse.Grammar.Tokens
 
         public override string ToString()
         {
-            return $"ListToken<{InnerToken}, {Range}>";
+            string delimiters = Delimiters != null ? $", Delimiters = ['{string.Join("', '", Delimiters)}']" : "";
+            return $"ListToken<{InnerToken}, {Range}{delimiters}>";
         }
     }
 }
