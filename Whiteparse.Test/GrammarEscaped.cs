@@ -145,7 +145,7 @@ namespace Whiteparse.Test
         }
 
         [Fact]
-        public void EscapedQuoteInLiteralToken()
+        public void EscapedQuoteInDoubleLiteralToken()
         {
             var expected = new Specification(
                 new List<Token>
@@ -155,6 +155,19 @@ namespace Whiteparse.Test
                 new List<Variable>());
 
             CompareGrammar(@"$"" lit \""eral\"" """, expected);
+        }
+
+        [Fact]
+        public void EscapedQuoteInSingleLiteralToken()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new LiteralToken(" lit 'eral' ")
+                },
+                new List<Variable>());
+
+            CompareGrammar("$' lit \\'eral\\' '", expected);
         }
 
         [Fact]

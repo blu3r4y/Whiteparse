@@ -134,7 +134,7 @@ namespace Whiteparse.Test
         }
 
         [Fact]
-        public void LiteralToken()
+        public void LiteralTokenDouble()
         {
             var expected = new Specification(
                 new List<Token>
@@ -145,6 +145,20 @@ namespace Whiteparse.Test
                 new List<Variable>());
 
             CompareGrammar("$\"  something literal  \" $\"NJRpT7u=:*8SN:$/wapCC&dW9 R@*aeZFtPUYqfEk @JUC-&3_&RTYxO+x\"", expected);
+        }
+
+        [Fact]
+        public void LiteralTokenSingle()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new LiteralToken("  something literal  "),
+                    new LiteralToken("NJRpT7u=:*8SN:$/wapCC&dW9 R@*aeZFtPUYqfEk @JUC-&3_&RTYxO+x"),
+                },
+                new List<Variable>());
+
+            CompareGrammar("$'  something literal  ' $'NJRpT7u=:*8SN:$/wapCC&dW9 R@*aeZFtPUYqfEk @JUC-&3_&RTYxO+x'", expected);
         }
 
         [Fact]

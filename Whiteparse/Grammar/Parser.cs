@@ -61,6 +61,11 @@ namespace Whiteparse.Grammar
                 from content in CharsExceptEscaped('"').Many().Text()
                 from right in Char('"')
                 select new LiteralToken(content))
+            .XOr(
+                from left in Char('\'')
+                from content in CharsExceptEscaped('\'').Many().Text()
+                from right in Char('\'')
+                select new LiteralToken(content))
             .Named("literal token");
 
         private static readonly Func<bool, Parser<Token>> RegExTokenDefinition = hidden => (
