@@ -1,7 +1,6 @@
 ﻿using DeepEqual.Syntax;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Sprache;
 using Whiteparse.Grammar;
 using Xunit;
 using Xunit.Abstractions;
@@ -34,7 +33,7 @@ namespace Whiteparse.Test
 
         protected void FailGrammar(string grammar)
         {
-            Assert.ThrowsAny<ParseException>(() =>
+            Assert.ThrowsAny<GrammarException>(() =>
             {
                 try
                 {
@@ -45,7 +44,7 @@ namespace Whiteparse.Test
                     output.WriteLine("");
                     output.WriteLine(parsed.ToString());
                 }
-                catch (ParseException e)
+                catch (GrammarException e)
                 {
                     output.WriteLine(e.Message);
                     throw;

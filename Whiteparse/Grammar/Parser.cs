@@ -251,9 +251,17 @@ namespace Whiteparse.Grammar
         /// <summary>
         /// Parse the grammar specification from text input to a <see cref="Specification"/> object
         /// </summary>
+        /// <exception cref="GrammarException">An error occured during grammar parsing or semantic resolution</exception>
         public static Specification Parse(string input)
         {
-            return Specification.Parse(input);
+            try
+            {
+                return Specification.Parse(input);
+            }
+            catch (ParseException e)
+            {
+                throw new GrammarException("An error occurred while parsing the grammar specification. " + e.Message, e);
+            }
         }
     }
 }
