@@ -4,7 +4,10 @@ using System.Linq;
 
 namespace Whiteparse.Grammar.Tokens
 {
-    public enum TokenDataType
+    /// <summary>
+    /// Data type of a token
+    /// </summary>
+    public enum TokenType
     {
         Auto,
         Int,
@@ -13,23 +16,40 @@ namespace Whiteparse.Grammar.Tokens
         String,
     }
 
+    /// <summary>
+    /// A token which parses the value in the input and references it with a specified <see cref="Name"/>
+    /// </summary>
     public class NamedToken : Token
     {
+        /// <summary>
+        /// The name of the token in the resulting object
+        /// </summary>
         public string Name { get; }
-        public string[] StructuredName { get; }
-        public TokenDataType Type { get; }
 
+        /// <summary>
+        /// The structured name, if specified (or null if not specified)
+        /// </summary>
+        public string[] StructuredName { get; }
+
+        /// <summary>
+        /// The data type of this token
+        /// </summary>
+        public TokenType Type { get; }
+
+        /// <summary>
+        /// If this <see cref="NamedToken"/> is specified by a structured name
+        /// </summary>
         public bool HasStructuredNames => StructuredName != null;
 
         /// <summary>
-        /// Create a named token
+        /// Create a <see cref="NamedToken"/>
         /// </summary>
         /// <param name="name">The token name</param>
         /// <param name="type">Force the data type of this token during parsing</param>
         /// <param name="hidden">Hidden tokens are hidden in the final object</param>
         /// <exception cref="ArgumentException">If the token name contains invalid characters</exception>
         /// <exception cref="ArgumentNullException">If the token name is null</exception>
-        public NamedToken(string name, TokenDataType type = TokenDataType.Auto, bool hidden = false) : base(hidden)
+        public NamedToken(string name, TokenType type = TokenType.Auto, bool hidden = false) : base(hidden)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -42,16 +62,16 @@ namespace Whiteparse.Grammar.Tokens
         }
 
         /// <summary>
-        /// Create a structured named token, consisting of two or more hierarchic names.
+        /// Create a structured <see cref="NamedToken"/>, consisting of two or more hierarchic names.
         /// Structured tokens implicitly create a object structure.
         /// If only a single element is provided, this cosntructor behaves the same like the simple constructor.
         /// </summary>
-        /// <param name="structuredName">A collection of two or more named</param>
+        /// <param name="structuredName">A collection of two or more names</param>
         /// <param name="type">Force the data type of this token during parsing</param>
         /// <param name="hidden">Hidden tokens are hidden in the final object</param>
         /// <exception cref="ArgumentException">If any of the elements within the collections contains invalid characters</exception>
         /// <exception cref="ArgumentNullException">If the structured name collection is null</exception>
-        public NamedToken(ICollection<string> structuredName, TokenDataType type = TokenDataType.Auto, bool hidden = false) : base(hidden)
+        public NamedToken(ICollection<string> structuredName, TokenType type = TokenType.Auto, bool hidden = false) : base(hidden)
         {
             if (structuredName == null || structuredName.Count == 0)
                 throw new ArgumentNullException(nameof(structuredName));
@@ -76,7 +96,7 @@ namespace Whiteparse.Grammar.Tokens
 
         public override string ToString()
         {
-            string type = Type != TokenDataType.Auto ? $", {Type}" : "";
+            string type = Type != TokenType.Auto ? $", {Type}" : "";
             string hidden = Hidden ? ", Hidden" : "";
             string structered = HasStructuredNames ? ", Structured" : "";
             return $"NamedToken<\"{Name}\"{type}{structered}{hidden}>";

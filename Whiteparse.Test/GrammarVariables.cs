@@ -179,6 +179,31 @@ namespace Whiteparse.Test
         }
 
         [Fact]
+        public void VariableWithInlineListAndListToken()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new NamedToken("token")
+                },
+                new List<Variable>
+                {
+                    new Variable("var",
+                        new List<Token>
+                        {
+                            new ListToken(
+                                new InlineListToken(new List<Token>
+                                {
+                                    new NamedToken("a"),
+                                    new NamedToken("b")
+                                }), 10)
+                        })
+                });
+
+            CompareGrammar("$token \n $$var = [$a $b]{10}", expected);
+        }
+
+        [Fact]
         public void MultiLineVariableStatementWithTrailingWhiteSpace()
         {
             var expected = new Specification(

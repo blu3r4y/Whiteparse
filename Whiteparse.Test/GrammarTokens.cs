@@ -96,8 +96,8 @@ namespace Whiteparse.Test
             var expected = new Specification(
                 new List<Token>
                 {
-                    new NamedToken("named", TokenDataType.Auto, true),
-                    new NamedToken("typed", TokenDataType.Int, true)
+                    new NamedToken("named", TokenType.Auto, true),
+                    new NamedToken("typed", TokenType.Int, true)
                 },
                 new List<Variable>());
 
@@ -123,10 +123,10 @@ namespace Whiteparse.Test
             var expected = new Specification(
                 new List<Token>
                 {
-                    new NamedToken("token1", TokenDataType.Int),
-                    new NamedToken("token2", TokenDataType.Float),
-                    new NamedToken("token3", TokenDataType.String),
-                    new NamedToken("token4", TokenDataType.Bool)
+                    new NamedToken("token1", TokenType.Int),
+                    new NamedToken("token2", TokenType.Float),
+                    new NamedToken("token3", TokenType.String),
+                    new NamedToken("token4", TokenType.Bool)
                 },
                 new List<Variable>());
 
@@ -314,7 +314,7 @@ namespace Whiteparse.Test
                 },
                 new List<Variable>());
 
-            CompareGrammar("$;", expected);
+            CompareGrammar("$.", expected);
         }
 
         [Fact]
@@ -328,7 +328,7 @@ namespace Whiteparse.Test
                 },
                 new List<Variable>());
 
-            CompareGrammar("$; $;", expected);
+            CompareGrammar("$. $.", expected);
         }
 
         [Fact]

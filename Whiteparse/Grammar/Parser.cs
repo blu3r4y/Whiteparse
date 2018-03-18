@@ -8,270 +8,247 @@ using static Sprache.Parse;
 
 namespace Whiteparse.Grammar
 {
+    /// <summary>
+    /// Parses the Whiteparse grammar to a <see cref="Specification"/> object
+    /// </summary>
     public static class Parser
     {
-        /** Each token has to start with this symbol. Variables will start with two occurences of this symbol. */
+        /// <summary>Every token has to start with this character. Variables will start with two occurences of this character.</summary>
         private const char TOKEN_PREFIX = '$';
 
-        /** If this symbol is immediately followed by the token prefix, the token is flagged as hidden */
+        /// <summary>If this character is immediately followed by the token prefix, the token is flagged as hidden</summary>
         private const char HIDDEN_PREFIX = '?';
 
-        /** Content beyond this symbol is ignored until the end of the line (except if it occurs within strings or tokens) */
+        /// <summary>Content beyond this character is ignored until the end of the line (except if it occurs within strings or tokens)</summary>
         private const char COMMENT_PREFIX = '#';
 
-        /** The symbol which separates the variable name from the variable content */
-        private const char VARIABLE_DEFINITION_SIGN = '=';
-
-        /** Character used for escaping symbols */
+        /// <summary>Character used for escaping special character</summary>
         private const char ESCAPE_CHARACTER = '\\';
 
-        /** Reserved token identifier for the newline token */
-        private const char NEWLINE_TOKEN_IDENTIFIER = ';';
+        /// <summary>The character which separates the variable name from the variable content</summary>
+        private const char VARIABLE_DEFINITION_SIGN = '=';
 
-        /* comments */
+        /// <summary>Reserved token identifier for the newline token</summary>
+        private const char NEWLINE_TOKEN_IDENTIFIER = '.';
 
-        private static readonly CommentParser Comment = new CommentParser(COMMENT_PREFIX.ToString(), null, null, "\n");
-
-        /* escaped new line wrapping */
-
-        private static readonly Parser<string> EscapedNewLine =
-            from escape in Char(ESCAPE_CHARACTER)
-            from whitespace in WhiteSpace.Except(LineEnd).Many()
-            from newline in LineEnd
-            select newline;
-
-        /* parenthesized strings */
-
-        private static readonly Parser<string> ParenthesizedRegExString =
-            AnyCharExceptEscaped('(', ')')
-                .XOr(
-                    from left in Char('(')
-                    from content in ParenthesizedRegExString
-                    from right in Char(')')
-                    select '(' + content + ')')
-                .Many().Select(string.Concat)
-                .Named("string with parenthesis");
+        /// <summary>The character which separates field names in structured identifiers</summary>
+        private const char STRUCTURED_IDENTIFIER_DELIMITER = '.';
 
         /* identifiers */
 
-        private static readonly Parser<string> IdentifierParser =
+        private static readonly Parser<string> Identifier =
             LetterOrDigit.AtLeastOnce().Text()
                 .Named("identifier");
 
-        private static readonly Parser<IEnumerable<string>> DottedIdentifierParser =
-            LetterOrDigit.AtLeastOnce().Text().DelimitedBy(Char('.'))
-                .Or(LetterOrDigit.AtLeastOnce().Text().Select(e => new[] {e}))
+        private static readonly Parser<IEnumerable<string>> StructuredIdentifier =
+            Identifier.DelimitedBy(Char(STRUCTURED_IDENTIFIER_DELIMITER))
                 .Named("dotted identifier");
 
-        /* inner token definitions */
+        /* token definitions */
 
-        private static readonly Parser<TokenDataType> TokenTypeParser = (
-                from left in Char('[')
-                from typeCode in String("int").Return(TokenDataType.Int)
-                    .XOr(String("float").Return(TokenDataType.Float))
-                    .XOr(String("string").Return(TokenDataType.String))
-                    .XOr(String("bool").Return(TokenDataType.Bool))
-                from right in Char(']')
-                select typeCode)
-            .Named("token type code");
-
-        private static readonly Parser<Token> NewLineTokenParser =
+        private static readonly Parser<Token> NewLineTokenDefinition =
             Char(NEWLINE_TOKEN_IDENTIFIER).Return(new NewLineToken())
                 .Named("new line token");
 
-        private static readonly Func<bool, Parser<Token>> NamedTokenParser =
-            hidden => (
-                    from type in TokenTypeParser.Or(Return(TokenDataType.Auto))
-                    from name in DottedIdentifierParser
-                    select new NamedToken(name.ToArray(), type, hidden))
-                .Named("token name");
+        private static readonly Func<bool, Parser<Token>> NamedTokenDefinition = hidden => (
+                from type in TokenType.XOr(Return(Tokens.TokenType.Auto))
+                from name in StructuredIdentifier
+                select new NamedToken(name.ToArray(), type, hidden))
+            .Named("token name");
 
-        private static readonly Parser<Token> LiteralTokenParser = (
+        private static readonly Parser<Token> LiteralTokenDefinition = (
                 from left in Char('"')
                 from content in CharsExceptEscaped('"').Many().Text()
                 from right in Char('"')
                 select new LiteralToken(content))
             .Named("literal token");
 
-        private static readonly Func<bool, Parser<Token>> RegExTokenParser =
-            hidden => (
+        private static readonly Func<bool, Parser<Token>> RegExTokenDefinition = hidden => (
+                from left in Char('(')
+                from content in RegExPattern
+                from right in Char(')')
+                select new RegExToken(content, hidden))
+            .Named("regex token");
+
+        private static readonly Parser<string> RegExPattern =
+            AnyCharExceptEscaped('(', ')').XOr(
                     from left in Char('(')
-                    from content in ParenthesizedRegExString
+                    from content in RegExPattern
                     from right in Char(')')
-                    select new RegExToken(content, hidden))
-                .Named("regex token");
+                    select '(' + content + ')')
+                .Many().Select(string.Concat)
+                .Named("regex pattern");
 
-        /* list token extension */
+        private static readonly Parser<TokenType> TokenType = (
+                from left in Char('[')
+                from typeCode in String("int").Return(Tokens.TokenType.Int)
+                    .XOr(String("float").Return(Tokens.TokenType.Float))
+                    .XOr(String("string").Return(Tokens.TokenType.String))
+                    .XOr(String("bool").Return(Tokens.TokenType.Bool))
+                from right in Char(']')
+                select typeCode)
+            .Named("token type");
 
-        private static readonly Parser<(IRangeSpecifier, string[])> ListTokenExtensionParser = (
+        /* list tokens */
+
+        private static readonly Parser<(IRangeSpecifier range, string[] delimiters)> ListTokenExtension = (
                 from left in Char('{')
                 from range in Char('+').Return(AutomaticRange.FromType(AutomaticRangeType.AtLeastOnce))
                     .XOr(String("*?").Return(AutomaticRange.FromType(AutomaticRangeType.ManyLazy))
                         .Or(Char('*').Return(AutomaticRange.FromType(AutomaticRangeType.Many))))
                     .XOr<IRangeSpecifier>(Number.Then(n => Return(new NumericRange(int.Parse(n)))))
-                    .XOr(Char(TOKEN_PREFIX)
-                        .Then(d => IdentifierParser
-                            .Then(name => Return(new TokenRange(new NamedToken(name))))))
-                from delimiters in Char(':')
-                    .Then(c => CharsExceptEscaped(':', '}').AtLeastOnce().Text().DelimitedBy(Char(':')))
-                    .Optional()
+                    .XOr(Char(TOKEN_PREFIX).Then(d =>
+                        Identifier.Then(name => Return(new TokenRange(new NamedToken(name))))))
+                from delimiters in
+                    Char(':').Then(c => CharsExceptEscaped(':', '{', '}').AtLeastOnce().Text().DelimitedBy(Char(':')))
+                        .Optional()
                 from right in Char('}')
-                select (range, delimiters.IsDefined ? delimiters.Get().ToArray() : null))
+                select (range, delimiters.GetOrDefault()?.ToArray()))
             .Named("range and/or delimiter specification");
 
-        /* tokens */
-
-        private static readonly Parser<Token> TokenDeclarationParser = (
-                from token in NewLineTokenParser
-                    .XOr(LiteralTokenParser
-                        .XOr(Char(HIDDEN_PREFIX).Optional()
-                            .Then(hidden =>
-                                NamedTokenParser(hidden.IsDefined)
-                                    .XOr(RegExTokenParser(hidden.IsDefined)))))
-                from listExt in ListTokenExtensionParser.Many()
-                select listExt.Any() ? ListTokenExtensionsWrapper(token, listExt) : token)
-            .Named("token declaration");
-
-        private static readonly Parser<Token> TokenParser = (
-                from dollar in Char(TOKEN_PREFIX)
-                from token in TokenDeclarationParser
-                select token)
-            .Named("token");
-
-        /* inline list token */
-
-        private static readonly Parser<InlineListToken> InlineListTokenParser = (
+        private static readonly Parser<InlineListToken> InlineListToken = (
                 from left in Char('[')
-                from tokens in TokenParser.XOr(TextParser).SingleLineSuperToken().Many()
+                from tokens in Token.XOr(Text).SingleLineSuperToken().Many()
                 from right in Char(']')
                 select new InlineListToken(tokens))
             .Named("inline list");
 
-        /* text (parsed as literal tokens) */
+        /* tokens */
 
-        private static readonly Parser<char> NoWhiteSpaceOrPrefixOrComment =
-            CharsExceptEscaped(TOKEN_PREFIX, COMMENT_PREFIX, '{', '}', '[', ']').Except(WhiteSpace);
+        private static readonly Parser<Token> TokenDefinition =
+            Char(TOKEN_PREFIX).Then(e =>
+                    NewLineTokenDefinition
+                        .XOr(LiteralTokenDefinition
+                            .XOr(Char(HIDDEN_PREFIX).Optional().Then(hidden =>
+                                NamedTokenDefinition(hidden.IsDefined)
+                                    .XOr(RegExTokenDefinition(hidden.IsDefined))))))
+                .Named("token definition");
 
-        private static readonly Parser<LiteralToken> TextParser = (
-                from content in NoWhiteSpaceOrPrefixOrComment.AtLeastOnce().Text().Or(Comment.SingleLineComment)
-                select new LiteralToken(content))
-            .Named("text");
+        private static readonly Parser<Token> Token = (
+                from token in TokenDefinition.XOr(InlineListToken)
+                from listExt in ListTokenExtension.Many()
+                select listExt.Any() ? UnwrapListExtensions(token, listExt) : token)
+            .Named("token");
 
-        /* variable statements */
-
-        private static readonly Parser<string> VariableObjectTypeParse = (
-                from left in Char('[')
-                from typeCode in LetterOrDigit.Or(Char('_')).AtLeastOnce().Text()
-                    .DelimitedBy(Char('.')).Select(e => string.Join(".", e))
-                    .Or(LetterOrDigit.Or(Char('_')).AtLeastOnce().Text())
-                from right in Char(']')
-                select typeCode)
-            .Named("variable object type");
-
-        private static readonly Parser<Variable> VariableParser = (
-                from firstDollar in Char(TOKEN_PREFIX)
-                from secondDollar in Char(TOKEN_PREFIX)
-                from type in VariableObjectTypeParse.Optional()
-                from name in IdentifierParser
-                from leadingWhitespace in WhiteSpace.Many()
-                from equal in Char(VARIABLE_DEFINITION_SIGN)
-                from trailingWhitespace in WhiteSpace.Many()
-                from tokens in TokenParser.XOr(TextParser).SingleLineSuperToken().Many()
-                select new Variable(name, tokens, type.GetOrDefault()))
-            .Named("variable definition");
-
-        /* grammar specification */
-
-        private static readonly Parser<Specification> SpecificationParser = (
-                from elements in TokenParser
-                    .Or<object>(VariableParser)
-                    .XOr(InlineListTokenParser)
-                    .XOr(TextParser)
-                    .SuperToken().Many().Optional()
-                select new Specification(
-                    elements.IsDefined ? elements.Get().OfType<Token>() : null,
-                    elements.IsDefined ? elements.Get().OfType<Variable>() : null))
-            .SuperToken()
-            .End()
-            .Named("grammar specification");
-
-        /**
-         * Parse the token, embedded in any amount of whitespace characters or comments
-         */
-        private static Parser<T> SuperToken<T>(this Parser<T> parser)
-        {
-            // TODO: are leading comments even possible?
-            return from leading in WhiteSpace.Once()
-                    .XOr(Comment.SingleLineComment)
-                    .Many()
-                from item in parser
-                from trailing in WhiteSpace.Once()
-                    .XOr(Comment.SingleLineComment)
-                    .Many()
-                select item;
-        }
-
-        /**
-         * Parse the token, embedded in any amount of whitespace (except line breaks) characters or comments.
-         * If the line es ended with a escape character, multiple lines are possible.
-         */
-        private static Parser<T> SingleLineSuperToken<T>(this Parser<T> parser)
-        {
-            // TODO: are leading new line escapes even possible?
-            return from leading in WhiteSpace.Except(LineEnd).Once()
-                    .XOr(EscapedNewLine)
-                    .XOr(Comment.SingleLineComment)
-                    .Many()
-                from item in parser
-                from trailing in WhiteSpace.Except(LineEnd).Once()
-                    .XOr(EscapedNewLine)
-                    .XOr(Comment.SingleLineComment)
-                    .Many()
-                select item;
-        }
-
-        /// <summary>
-        /// Parses any character except those in the given parameters, unless they have been escaped.
-        /// The escape character will not be returned.
-        /// If the escape character appears twice, the escape character is parsed only once (escaping the escape character).
-        /// If a escape character attempts to escape a character not in the given parameters, the parser fails.
-        /// The parser also fails if line end characters are parsed.
-        /// </summary>
-        /// <param name="chars">Characters which need to be escaped</param>
-        /// <returns>Any parsed or escaped character (except line ends)</returns>
-        private static Parser<char> CharsExceptEscaped(params char[] chars)
-        {
-            return Char(ESCAPE_CHARACTER).Then(e => Char(ESCAPE_CHARACTER).XOr(Chars(chars)))
-                .XOr(CharExcept(chars).Except(LineEnd))
-                .Named("any (escaped) character except line ends, " + string.Join(", ", chars));
-        }
-
-        /// <summary>
-        /// Parses any character except those in the given parameters, unless they have been escaped.
-        /// Escape characters will always be parsed.
-        /// The parser fails if line end characters are parsed.
-        /// </summary>
-        /// <param name="chars">Characters which are only parsed if they have been escaped</param>
-        /// <returns>Any parsed character (except line ends) or two characters if a character was escaped</returns>
-        private static Parser<string> AnyCharExceptEscaped(params char[] chars)
-        {
-            return Char(ESCAPE_CHARACTER).Then(e => AnyChar.Except(LineEnd).Then(c => Return(string.Concat(ESCAPE_CHARACTER, c))))
-                .XOr(CharExcept(chars).Except(LineEnd).Once().Text());
-        }
-
-        private static ListToken ListTokenExtensionsWrapper(Token inner, IEnumerable<(IRangeSpecifier, string[])> listExtensions)
+        private static ListToken UnwrapListExtensions(Token inner, IEnumerable<(IRangeSpecifier, string[])> listExtensions)
         {
             return listExtensions.Aggregate(inner,
                 (Token current, (IRangeSpecifier range, string[] delimiters) extension)
                     => new ListToken(current, extension.range, extension.delimiters)) as ListToken;
         }
 
-        /**
-         * Parse the grammar specification from text input
-         */
+        /* text */
+
+        private static readonly Parser<char> TextCharacter =
+            CharsExceptEscaped(TOKEN_PREFIX, COMMENT_PREFIX, '(', ')', '{', '}', '[', ']');
+
+        private static readonly Parser<LiteralToken> Text = (
+                from content in TextCharacter.Except(WhiteSpace).AtLeastOnce().Text()
+                select new LiteralToken(content))
+            .Named("text");
+
+        /* variable statements */
+
+        private static readonly Parser<Variable> Variable = (
+                from dollars in Char(TOKEN_PREFIX).Repeat(2)
+                from type in ObjectType.Optional()
+                from name in Identifier
+                from leading in WhiteSpace.Many()
+                from sign in Char(VARIABLE_DEFINITION_SIGN)
+                from trailing in WhiteSpace.Many()
+                from tokens in Token.XOr(Text).SingleLineSuperToken().Many()
+                select new Variable(name, tokens, type.GetOrDefault()))
+            .Named("variable definition");
+
+        private static readonly Parser<string> ObjectType = (
+                from left in Char('[')
+                from typeCode in LetterOrDigit.XOr(Char('_')).AtLeastOnce().Text()
+                    .DelimitedBy(Char('.')).Select(e => string.Join(".", e))
+                from right in Char(']')
+                select typeCode)
+            .Named("variable object type");
+
+        /* helpers */
+
+        private static readonly CommentParser Comment =
+            new CommentParser(COMMENT_PREFIX.ToString(), null, null, "\n");
+
+        private static readonly Parser<string> LineContinuation =
+            from escape in Char(ESCAPE_CHARACTER)
+            from whitespace in WhiteSpace.Except(LineEnd).Many()
+            from newline in LineEnd
+            select newline;
+
+        /// <summary>
+        /// Parse the token, embedded in any amount of whitespace characters or comments
+        /// </summary>
+        private static Parser<T> SuperToken<T>(this Parser<T> parser)
+        {
+            return from leading in WhiteSpace.Once().XOr(Comment.SingleLineComment).Many()
+                from item in parser
+                from trailing in WhiteSpace.Once().XOr(Comment.SingleLineComment).Many()
+                select item;
+        }
+
+        /// <summary>
+        /// Parse the token, embedded in any amount of whitespace (except line breaks) characters or comments.
+        /// If the line es ended with a escape character, multiple lines are possible.
+        /// </summary>
+        private static Parser<T> SingleLineSuperToken<T>(this Parser<T> parser)
+        {
+            return from leading in WhiteSpace.Except(LineEnd).Once().XOr(LineContinuation).XOr(Comment.SingleLineComment).Many()
+                from item in parser
+                from trailing in WhiteSpace.Except(LineEnd).Once().XOr(LineContinuation).XOr(Comment.SingleLineComment).Many()
+                select item;
+        }
+
+        /// <summary>
+        /// Parses any character except those in the given parameters, unless they have been escaped.
+        /// The escape character will not be returned in the output.
+        /// If the escape character appears twice, the escape character is parsed only once (escaping the escape character).
+        /// If a escape character attempts to escape a character not in the given parameters, the parser fails (unrecognized escape character).
+        /// The parser also fails if line end characters are parsed.
+        /// </summary>
+        /// <param name="chars">The only characters which can (and must) be escaped</param>
+        /// <returns>The parsed or escaped character</returns>
+        private static Parser<char> CharsExceptEscaped(params char[] chars)
+        {
+            return Char(ESCAPE_CHARACTER).Then(e => Char(ESCAPE_CHARACTER).XOr(Chars(chars)))
+                .XOr(CharExcept(chars).Except(LineEnd));
+        }
+
+        /// <summary>
+        /// Parses any character except those in the given parameters, unless they have been escaped.
+        /// The escape character will also be returned in the output.
+        /// The parser fails if line end characters are parsed.
+        /// </summary>
+        /// <param name="chars">Characters which are only parsed if they are escaped</param>
+        /// <returns>Any parsed character (except line ends) or two characters if a character was escaped</returns>
+        private static Parser<string> AnyCharExceptEscaped(params char[] chars)
+        {
+            return Char(ESCAPE_CHARACTER)
+                .Then(e => AnyChar.Except(LineEnd).Then(c => Return(string.Concat(ESCAPE_CHARACTER, c))))
+                .XOr(CharExcept(chars).Except(LineEnd).Once().Text());
+        }
+
+        /* grammar specification */
+
+        private static readonly Parser<Specification> Specification = (
+                from elements in Token
+                    .Or<object>(Variable)
+                    .XOr(Text)
+                    .SuperToken().Many().Optional()
+                select new Specification(elements.GetOrDefault().OfType<Token>(),
+                    elements.GetOrDefault().OfType<Variable>()))
+            .SuperToken().End()
+            .Named("grammar specification");
+
+        /// <summary>
+        /// Parse the grammar specification from text input to a <see cref="Specification"/> object
+        /// </summary>
         public static Specification Parse(string input)
         {
-            return SpecificationParser.Parse(input);
+            return Specification.Parse(input);
         }
     }
 }

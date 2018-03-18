@@ -18,7 +18,7 @@ namespace Whiteparse.Test
             var expected = new Specification(
                 new List<Token>
                 {
-                    new NamedToken("numLocations", TokenDataType.Int, true),
+                    new NamedToken("numLocations", TokenType.Int, true),
                     new NamedToken("location"),
                     new NamedToken("x"),
                     new NamedToken("y"),
@@ -130,6 +130,64 @@ namespace Whiteparse.Test
                 new List<Variable>());
 
             CompareGrammar(@"$size $token \{$size\}", expected);
+        }
+
+        [Fact]
+        public void InlineListWithListTokenExtension()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new ListToken(
+                        new InlineListToken(new List<Token>
+                        {
+                            new NamedToken("a"),
+                            new NamedToken("b")
+                        }), 10)
+                },
+                new List<Variable>());
+
+            CompareGrammar("[$a $b]{10}", expected);
+        }
+
+        [Fact]
+        public void TokenAfterVariable()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new NamedToken("b")
+                },
+                new List<Variable>
+                {
+                    new Variable("var", new List<Token>
+                    {
+                        new LiteralToken("123"),
+                        new NamedToken("a")
+                    })
+                });
+
+            CompareGrammar("$$var = 123 $a \n $b", expected);
+        }
+
+        [Fact]
+        public void LiteralAfterVariable()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new LiteralToken("a")
+                },
+                new List<Variable>
+                {
+                    new Variable("var", new List<Token>
+                    {
+                        new LiteralToken("123"),
+                        new NamedToken("a")
+                    })
+                });
+
+            CompareGrammar("$$var = 123 $a \n a", expected);
         }
     }
 }

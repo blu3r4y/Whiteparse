@@ -28,12 +28,6 @@ namespace Whiteparse.Test
         }
 
         [Fact]
-        public void InvalidLeadingDot()
-        {
-            FailGrammar("$.key");
-        }
-
-        [Fact]
         public void InvalidType()
         {
             FailGrammar("$[magic]inv");
@@ -122,55 +116,55 @@ namespace Whiteparse.Test
         {
             FailGrammar("$(a\r\nb)");
         }
-        
+
         [Fact]
         public void MultiLineVariableStatementWithTrailingGarbage()
         {
             FailGrammar("$token $$variable = $a $b $c \\ garbage \n $d $e $f");
         }
-        
+
         [Fact]
         public void MultiLineVariableStatementWithTrailingVariable()
         {
             FailGrammar("$token $$variable = $a $b $c \\ $trailing \n $d $e $f");
         }
-        
+
         [Fact]
         public void ObjectTypedVariableWithTrailingDot()
         {
             FailGrammar("$token $$[TrailingDot.]variable = $a");
         }
-        
+
         [Fact]
         public void ObjectTypedVariableWithInvalidDots()
         {
             FailGrammar("$token $$[Do..Dot]variable = $a");
         }
-        
+
         [Fact]
         public void InvalidStructuredVariableIdentifier()
         {
             FailGrammar("$token $$token.field = $a 5");
         }
-        
+
         [Fact]
         public void ListTokenEscapedAutomaticRangeMany()
         {
             FailGrammar("$token{\\*}");
         }
-        
+
         [Fact]
         public void ListTokenEscapedAutomaticRangeManyLazy()
         {
             FailGrammar("$token{\\*?}");
         }
-        
+
         [Fact]
         public void ListTokenEscapedAutomaticRangeAtLeastOnce()
         {
             FailGrammar("$token{\\+}");
         }
-        
+
         [Fact]
         public void ListTokenEscapedInvalidRangeSpecifier()
         {

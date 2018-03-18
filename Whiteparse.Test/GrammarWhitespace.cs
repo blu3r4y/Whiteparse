@@ -108,11 +108,42 @@ namespace Whiteparse.Test
                     new RegExToken("\\d+"),
                     new NamedToken("c"),
                     new NamedToken("d"),
-                    new NamedToken("efgh", TokenDataType.Auto, true)
+                    new NamedToken("efgh", TokenType.Auto, true)
                 },
                 new List<Variable>());
 
             CompareGrammar("$a$\"lit\"$b$(\\d+)$c$d$?efgh", expected);
+        }
+
+        [Fact]
+        public void MinimumWhiteSpace()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new NamedToken("numLocations", TokenType.Int, true),
+                    new NamedToken("location"),
+                    new NamedToken("x"),
+                    new NamedToken("y"),
+                    new LiteralToken("hub="),
+                    new NamedToken("hub")
+                },
+                new List<Variable>()
+                {
+                    new Variable("location", new List<Token>
+                    {
+                        new NamedToken("name"),
+                        new NamedToken("pos")
+                    }),
+                    new Variable("journey", new List<Token>
+                    {
+                        new NamedToken("from"),
+                        new NamedToken("to")
+                    })
+                });
+
+            CompareGrammar("$?[int]numLocations$location$x$y$$location=$name$pos\n" +
+                           "hub=$hub$$journey=$from$to", expected);
         }
 
         [Fact]
@@ -126,7 +157,7 @@ namespace Whiteparse.Test
                 },
                 new List<Variable>());
 
-            CompareGrammar("$;$;", expected);
+            CompareGrammar("$.$.", expected);
         }
 
         [Fact]
@@ -194,6 +225,90 @@ namespace Whiteparse.Test
                 new List<Variable>());
 
             CompareGrammar("[$x$y$z]", expected);
+        }
+
+        [Fact]
+        public void VariableWithLeadingLineContinuation()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new NamedToken("tok")
+                },
+                new List<Variable>
+                {
+                    new Variable("var", new List<Token>
+                    {
+                        new NamedToken("a"),
+                        new NamedToken("b")
+                    })
+                });
+
+            CompareGrammar("$$var =\\\n $a $b \n $tok", expected);
+        }
+
+        [Fact]
+        public void VariableWithTrailingLineContinuation()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new NamedToken("tok")
+                },
+                new List<Variable>
+                {
+                    new Variable("var", new List<Token>
+                    {
+                        new NamedToken("a"),
+                        new NamedToken("b")
+                    })
+                });
+
+            CompareGrammar("$$var = $a \\\n $b \\\n \n $tok", expected);
+        }
+
+        [Fact]
+        public void VariableWithEmptyLineContinuations()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new NamedToken("tok")
+                },
+                new List<Variable>
+                {
+                    new Variable("var", new List<Token>
+                    {
+                        new NamedToken("a"),
+                        new NamedToken("b")
+                    })
+                });
+
+            CompareGrammar("$$var =\\\n \\\n\\\n $a\\\n\\\n $b\\\n \\\n\n $tok", expected);
+        }
+
+        [Fact]
+        public void MultiLineWhiteSpaceWithComments()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new NamedToken("a"),
+                    new LiteralToken("lit"),
+                    new NamedToken("b"),
+                    new RegExToken("\\d+"),
+                    new NamedToken("c"),
+                    new NamedToken("d"),
+                    new NamedToken("efgh", TokenType.Auto, true)
+                },
+                new List<Variable>());
+
+            CompareGrammar("\n\n\n\n#comment\n#comment\n\n" +
+                           "$a$\"lit\"#comment\n\n\n#comment\n\n" +
+                           "$b\n\n\n\t\t\t$(\\d+)\t\t" +
+                           "$c#######\n\n\t\t\t" +
+                           "$d#??$?\\##\n\n\n" +
+                           "$?efgh", expected);
         }
     }
 }

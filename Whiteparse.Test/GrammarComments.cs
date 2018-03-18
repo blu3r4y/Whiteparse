@@ -50,6 +50,25 @@ namespace Whiteparse.Test
         }
 
         [Fact]
+        public void CommentsEverywhere()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new NamedToken("token1"),
+                    new NamedToken("tok")
+                }, new List<Variable>
+                {
+                    new Variable("var", new List<Token>
+                    {
+                        new LiteralToken("1")
+                    })
+                });
+
+            CompareGrammar("$token1 #comment1 #comment2 \n $tok#comment3 #\n#com\n\n#com\n$$var = 1#comment", expected);
+        }
+
+        [Fact]
         public void MultipleComments()
         {
             var expected = new Specification(
@@ -85,7 +104,7 @@ namespace Whiteparse.Test
                     new LiteralToken("lite#ral")
                 });
 
-            // comments are not possible within literal tokens
+            // comments are not allowed within literal tokens
             CompareGrammar("$token $\"lite#ral\"", expected);
         }
 
@@ -99,7 +118,7 @@ namespace Whiteparse.Test
                     new RegExToken(".*\\d+#\\d+")
                 });
 
-            // comments are not possible within regex tokens
+            // comments are not allowed within regex tokens
             CompareGrammar("$token $(.*\\d+#\\d+)", expected);
         }
 

@@ -45,11 +45,11 @@ namespace Whiteparse.Test
             var expected = new Specification(
                 new List<Token>
                 {
-                    new LiteralToken("$;")
+                    new LiteralToken("$.")
                 },
                 new List<Variable>());
 
-            CompareGrammar(@"\$;", expected);
+            CompareGrammar(@"\$.", expected);
         }
 
         [Fact]
@@ -119,6 +119,32 @@ namespace Whiteparse.Test
         }
 
         [Fact]
+        public void UnescapedEscapeCharacterInRegEx()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new RegExToken(@"\d+\(1\x")
+                },
+                new List<Variable>());
+
+            CompareGrammar(@"$(\d+\(1\x)", expected);
+        }
+
+        [Fact]
+        public void EscapedBackslashInRegEx()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new RegExToken(@"\\a")
+                },
+                new List<Variable>());
+
+            CompareGrammar(@"$(\\a)", expected);
+        }
+
+        [Fact]
         public void EscapedQuoteInLiteralToken()
         {
             var expected = new Specification(
@@ -164,19 +190,6 @@ namespace Whiteparse.Test
         }
 
         [Fact]
-        public void UnescapedEscapeCharacterinRegEx()
-        {
-            var expected = new Specification(
-                new List<Token>
-                {
-                    new RegExToken(@"\d+\(1\x")
-                },
-                new List<Variable>());
-
-            CompareGrammar(@"$(\d+\(1\x)", expected);
-        }
-
-        [Fact]
         public void ListTokenEscapedDelimiter()
         {
             var expected = new Specification(
@@ -199,7 +212,7 @@ namespace Whiteparse.Test
                 },
                 new List<Variable>());
 
-            CompareGrammar(@"$value{*:{}", expected);
+            CompareGrammar(@"$value{*:\{}", expected);
         }
 
         [Fact]
@@ -227,6 +240,19 @@ namespace Whiteparse.Test
                 new List<Variable>());
 
             CompareGrammar(@"$value\{*:\}\}", expected);
+        }
+
+        [Fact]
+        public void ListTokenEscapedColon()
+        {
+            var expected = new Specification(
+                new List<Token>
+                {
+                    new ListToken(new NamedToken("value"), 2, new[] {":"})
+                },
+                new List<Variable>());
+
+            CompareGrammar(@"$value{2:\:}", expected);
         }
 
         [Fact]
