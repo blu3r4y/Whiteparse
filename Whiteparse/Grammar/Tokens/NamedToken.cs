@@ -32,6 +32,11 @@ namespace Whiteparse.Grammar.Tokens
         public string[] StructuredName { get; }
 
         /// <summary>
+        /// The referenced variable (or null if not specified)
+        /// </summary>
+        public Variable ReferencedVariable { get; internal set; }
+
+        /// <summary>
         /// The data type of this token
         /// </summary>
         public TokenType Type { get; }
@@ -39,7 +44,12 @@ namespace Whiteparse.Grammar.Tokens
         /// <summary>
         /// If this <see cref="NamedToken"/> is specified by a structured name
         /// </summary>
-        public bool HasStructuredNames => StructuredName != null;
+        public bool HasStructuredName => StructuredName != null;
+        
+        /// <summary>
+        /// If this <see cref="NamedToken"/> references a <see cref="Variable"/>
+        /// </summary>
+        public bool HasReferencedVariable => ReferencedVariable != null;
 
         /// <summary>
         /// Create a <see cref="NamedToken"/>
@@ -90,16 +100,33 @@ namespace Whiteparse.Grammar.Tokens
                 Name = structuredName.First();
                 StructuredName = null;
             }
-
+            
             Type = type;
+        }
+
+        /// <summary>
+        /// Create a <see cref="NamedToken"/> with a referenced <see cref="Variable"/>.
+        /// The name is implied by the variable name.
+        /// </summary>
+        /// <param name="variable">The variable</param>
+        /// <param name="type">Force the data type of this token during parsing</param>
+        /// <param name="hidden">Hidden tokens are hidden in the final object</param>
+        /// <exception cref="ArgumentNullException">If the variable is null</exception>
+        public NamedToken(Variable variable, TokenType type = TokenType.Auto, bool hidden = false) : base(hidden)
+        {
+            ReferencedVariable = variable ?? throw new ArgumentNullException(nameof(variable));
+            Name = variable.Name;
+            Type = type;
+            StructuredName = null;
         }
 
         public override string ToString()
         {
             string type = Type != TokenType.Auto ? $", {Type}" : "";
             string hidden = Hidden ? ", Hidden" : "";
-            string structered = HasStructuredNames ? ", Structured" : "";
-            return $"NamedToken<\"{Name}\"{type}{structered}{hidden}>";
+            string structered = HasStructuredName ? ", Structured" : "";
+            string variable = HasReferencedVariable ? ", ReferencesVariable" : "";
+            return $"NamedToken<\"{Name}\"{type}{structered}{variable}{hidden}>";
         }
     }
 }

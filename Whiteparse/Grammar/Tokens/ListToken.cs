@@ -8,12 +8,17 @@ namespace Whiteparse.Grammar.Tokens
     /// <summary>
     /// Parses a list of tokens by repeating a token according to a <see cref="IRangeSpecifier"/>
     /// </summary>
-    public class ListToken : Token
+    public class ListToken : Token, ITokenContainer
     {
         /// <summary>
         /// The <see cref="Token"/> to be repeated
         /// </summary>
         public Token InnerToken { get; }
+
+        /// <summary>
+        /// A interface-compatible getter to return the single <see cref="InnerToken"/>
+        /// </summary>
+        public IEnumerable<Token> InnerTokens => Enumerable.Repeat(InnerToken, 1);
 
         /// <summary>
         /// How to repeat the <see cref="InnerToken"/>

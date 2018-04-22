@@ -28,7 +28,7 @@ namespace Whiteparse.Test
             Specification parsed = Specification.FromString(grammar);
 
             output.WriteLine(parsed.ToString());
-            parsed.ShouldDeepEqual(expectedSpecification);
+            parsed.WithDeepEqual(expectedSpecification).IgnoreSourceProperty(e => e.GlobalScope).Assert();
         }
 
         protected void FailGrammar(string grammar)

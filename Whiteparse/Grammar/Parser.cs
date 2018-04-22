@@ -243,7 +243,7 @@ namespace Whiteparse.Grammar
                     .Or<object>(Variable)
                     .XOr(Text)
                     .SuperToken().Many().Optional()
-                select new Specification(elements.GetOrDefault().OfType<Token>(),
+                select new Specification(elements.GetOrDefault().OfType<Token>().ToList(),
                     elements.GetOrDefault().OfType<Variable>()))
             .SuperToken().End()
             .Named("grammar specification");

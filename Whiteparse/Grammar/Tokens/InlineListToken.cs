@@ -7,7 +7,7 @@ namespace Whiteparse.Grammar.Tokens
     /// <summary>
     /// Parses the specified tokens into a list (and not an object).
     /// </summary>
-    public class InlineListToken : Token
+    public class InlineListToken : Token, ITokenContainer
     {
         /// <summary>
         /// Elements of the parsed list
