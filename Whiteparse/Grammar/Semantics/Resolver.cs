@@ -7,7 +7,7 @@ namespace Whiteparse.Grammar.Semantics
     /// <summary>
     /// Performs both a static analysis of the grammar and some semantic resolutions  
     /// </summary>
-    public static class SemanticResolution
+    public static class Resolver
     {
         /// <summary>
         /// Check semantic rules in the token and variable definitions and return a scope tree

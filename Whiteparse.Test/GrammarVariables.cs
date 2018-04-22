@@ -15,7 +15,7 @@ namespace Whiteparse.Test
         [Fact]
         public void OneVariable()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -34,7 +34,7 @@ namespace Whiteparse.Test
         [Fact]
         public void TwoVariables()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -57,7 +57,7 @@ namespace Whiteparse.Test
         [Fact]
         public void SinglelineVariables()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -80,7 +80,7 @@ namespace Whiteparse.Test
         [Fact]
         public void InbetweenVariables()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token1"),
@@ -109,7 +109,7 @@ namespace Whiteparse.Test
         [Fact]
         public void VariablesAndText()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -134,7 +134,7 @@ namespace Whiteparse.Test
         [Fact]
         public void MultipleEqualSigns()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -154,7 +154,7 @@ namespace Whiteparse.Test
         [Fact]
         public void MultiLineVariableStatement()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -181,7 +181,7 @@ namespace Whiteparse.Test
         [Fact]
         public void VariableWithInlineListAndListToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -206,7 +206,7 @@ namespace Whiteparse.Test
         [Fact]
         public void MultiLineVariableStatementWithTrailingWhiteSpace()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -227,7 +227,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ObjectTypedVariables()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -247,7 +247,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ObjectTypedVariablesWithUnderscore()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -267,7 +267,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ObjectTypedVariablesWithLeadingUnderscore()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -287,7 +287,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ObjectTypedVariablesWithTrailingUnderscore()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -308,7 +308,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ObjectTypedVariablesWithDots()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -329,7 +329,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ObjectTypedVariablesWithUnicode()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")

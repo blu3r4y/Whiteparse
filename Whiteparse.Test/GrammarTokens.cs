@@ -16,7 +16,7 @@ namespace Whiteparse.Test
         [Fact]
         public void Empty()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>(),
                 new List<Variable>());
 
@@ -26,7 +26,7 @@ namespace Whiteparse.Test
         [Fact]
         public void Text()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("text")
@@ -39,7 +39,7 @@ namespace Whiteparse.Test
         [Fact]
         public void TextUnicode()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("\u50dd\u1365\u4e5c\u2441\u6b18\u4921\u6fc3\u052c"),
@@ -52,7 +52,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NamedTokenSingle()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -65,7 +65,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NamedTokenTriple()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("a"),
@@ -80,7 +80,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NamedTokenStructured()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken(new[] {"a", "b", "c"})
@@ -93,7 +93,7 @@ namespace Whiteparse.Test
         [Fact]
         public void HiddenNamedToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("named", TokenType.Auto, true),
@@ -107,7 +107,7 @@ namespace Whiteparse.Test
         [Fact]
         public void HiddenRegexToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken(".*?\\d+\\s\\w", true),
@@ -120,7 +120,7 @@ namespace Whiteparse.Test
         [Fact]
         public void TypedToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token1", TokenType.Int),
@@ -136,7 +136,7 @@ namespace Whiteparse.Test
         [Fact]
         public void LiteralTokenDouble()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("  something literal  "),
@@ -150,7 +150,7 @@ namespace Whiteparse.Test
         [Fact]
         public void LiteralTokenSingle()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("  something literal  "),
@@ -164,7 +164,7 @@ namespace Whiteparse.Test
         [Fact]
         public void LiteralTokenEmpty()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("")
@@ -177,7 +177,7 @@ namespace Whiteparse.Test
         [Fact]
         public void LiteralTokenUnicode()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("\u50dd\u1365\u4e5c\u2441\u6b18\u4921\u6fc3\u052c"),
@@ -190,7 +190,7 @@ namespace Whiteparse.Test
         [Fact]
         public void LiteralTokenEqualSign()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("="),
@@ -206,7 +206,7 @@ namespace Whiteparse.Test
         [Fact]
         public void RegExTokenSimple()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken(".*?\\d+\\s\\w"),
@@ -219,7 +219,7 @@ namespace Whiteparse.Test
         [Fact]
         public void RegExTokenEmpty()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken("")
@@ -232,7 +232,7 @@ namespace Whiteparse.Test
         [Fact]
         public void RegExTokenWithParenthesis()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken(".*@(.+\\.){3}"),
@@ -245,7 +245,7 @@ namespace Whiteparse.Test
         [Fact]
         public void RegExTokenWithNestedParenthesisSingle()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken("\\d(  (7) )asd"),
@@ -258,7 +258,7 @@ namespace Whiteparse.Test
         [Fact]
         public void RegExTokenWithNestedParenthesisMulti()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken("a()\\d+(\\w(\\d\\s+ )+\\d+(\\d(\\d)) (7) )"),
@@ -273,7 +273,7 @@ namespace Whiteparse.Test
         {
             // (c) matthew o'riordan https://regex101.com/library/cX0pJ8
 
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken("((([A-Za-z]{3,9}:(?:\\/\\/)?)(?:[-;:&=\\+\\$" +
@@ -294,7 +294,7 @@ namespace Whiteparse.Test
         {
             // (c) Chas. Owens https://stackoverflow.com/a/800847/927377
 
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken("(?:(?:(?:0?[13578]|1[02])(\\/|-|\\.)31)\\1|(" +
@@ -321,7 +321,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NewLineTokenSingle()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NewLineToken()
@@ -334,7 +334,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NewLineTokenDouble()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NewLineToken(),
@@ -348,7 +348,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenNumeric()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), 2)
@@ -361,7 +361,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenReference()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("size"),
@@ -375,7 +375,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenAutomatic()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("a"), AutomaticRangeType.AtLeastOnce),
@@ -390,7 +390,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenNested()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(
@@ -404,7 +404,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenNestedMultiple()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("size"),
@@ -421,7 +421,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenDelimitedSingle()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), AutomaticRangeType.Many, new[] {","})
@@ -434,7 +434,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenDelimitedMultiple()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), AutomaticRangeType.Many, new[] {",", ";", "|", " "})
@@ -447,7 +447,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenDelimitedStrings()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), AutomaticRangeType.Many, new[] {"ab", "cd"})
@@ -460,7 +460,7 @@ namespace Whiteparse.Test
         [Fact]
         public void InlineListTokenSimple()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new InlineListToken(new List<Token>
@@ -477,7 +477,7 @@ namespace Whiteparse.Test
         [Fact]
         public void InlineListTokenMultiple()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new InlineListToken(new List<Token>
@@ -499,7 +499,7 @@ namespace Whiteparse.Test
         [Fact]
         public void InlineListMixed()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new InlineListToken(new List<Token>

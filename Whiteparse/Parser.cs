@@ -5,11 +5,11 @@ namespace Whiteparse
 {
     public class Parser
     {
-        public Specification Specification { get; }
+        public Template Template { get; }
 
-        public Parser(Specification specification)
+        public Parser(Template template)
         {
-            Specification = specification;
+            Template = template;
         }
 
         public object ParseObject(string input)
@@ -22,9 +22,34 @@ namespace Whiteparse
             return JsonConvert.SerializeObject(ParseObject(input));
         }
 
-        public static Parser FromSpecificationString(string input)
+        public static Parser FromTemplate(Template template)
         {
-            return new Parser(Specification.FromString(input));
+            return new Parser(template);
+        }
+
+        public static Parser FromTemplate(string template)
+        {
+            return FromTemplate(Template.FromString(template));
+        }
+
+        public static object ParseObject(Template template, string input)
+        {
+            return FromTemplate(template).ParseObject(input);
+        }
+
+        public static object ParseObject(string template, string input)
+        {
+            return FromTemplate(template).ParseObject(input);
+        }
+
+        public static string ParseJson(Template template, string input)
+        {
+            return FromTemplate(template).ParseJson(input);
+        }
+
+        public static string ParseJson(string template, string input)
+        {
+            return FromTemplate(template).ParseJson(input);
         }
     }
 }

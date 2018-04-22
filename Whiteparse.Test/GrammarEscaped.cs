@@ -16,7 +16,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedTokenPrefix()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("$")
@@ -29,7 +29,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedTokenPrefixDouble()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("$$")
@@ -42,7 +42,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedTokenPrefixNewLine()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("$.")
@@ -55,7 +55,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedComment()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("#")
@@ -67,7 +67,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedCommentText()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token"),
@@ -82,7 +82,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("$name")
@@ -95,7 +95,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedParenthesisInsideRegEx()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken(@"\d+\(1\)")
@@ -108,7 +108,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedWrongParenthesisInsideRegEx()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken(@"\d+\(1")
@@ -121,7 +121,7 @@ namespace Whiteparse.Test
         [Fact]
         public void UnescapedEscapeCharacterInRegEx()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken(@"\d+\(1\x")
@@ -134,7 +134,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedBackslashInRegEx()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken(@"\\a")
@@ -147,7 +147,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedQuoteInDoubleLiteralToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken(@" lit ""eral"" ")
@@ -160,7 +160,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedQuoteInSingleLiteralToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken(" lit 'eral' ")
@@ -173,7 +173,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedVariableDefinition()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -192,7 +192,7 @@ namespace Whiteparse.Test
         [Fact]
         public void EscapedEscapeCharacter()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken(@"\")
@@ -205,7 +205,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenEscapedDelimiter()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), AutomaticRangeType.Many, new[] {":"})
@@ -218,7 +218,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenOpeningBracket()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), AutomaticRangeType.Many, new[] {"{"})
@@ -231,7 +231,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenEscapedClosingBracket()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), AutomaticRangeType.Many, new[] {"}"})
@@ -244,7 +244,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenEscapedBrackets()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("value"),
@@ -258,7 +258,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenEscapedColon()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), 2, new[] {":"})
@@ -271,7 +271,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenPrefixInDelimiter()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(new NamedToken("value"), AutomaticRangeType.Many, new[] {"$"})

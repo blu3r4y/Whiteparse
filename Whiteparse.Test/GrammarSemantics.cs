@@ -15,7 +15,7 @@ namespace Whiteparse.Test
         [Fact]
         public void SeparateNestedScopes()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new InlineListToken(new List<Token>
@@ -36,7 +36,7 @@ namespace Whiteparse.Test
         [Fact]
         public void TokenShadowing()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("point")
@@ -61,7 +61,7 @@ namespace Whiteparse.Test
         [Fact]
         public void UnusedVariable()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("b")
@@ -80,7 +80,7 @@ namespace Whiteparse.Test
         [Fact]
         public void MultiUseVariable()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("a1"),

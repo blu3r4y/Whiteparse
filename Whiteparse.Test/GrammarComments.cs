@@ -15,7 +15,7 @@ namespace Whiteparse.Test
         [Fact]
         public void SingleComment()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -27,7 +27,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NestedComment()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -39,7 +39,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentInBetween()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token1"),
@@ -52,7 +52,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentsEverywhere()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token1"),
@@ -71,7 +71,7 @@ namespace Whiteparse.Test
         [Fact]
         public void MultipleComments()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token1"),
@@ -84,7 +84,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentWithTokens()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token1"),
@@ -97,7 +97,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentInLiteralToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token"),
@@ -111,7 +111,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentInRegExToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token"),
@@ -125,7 +125,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentInIdentifier()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("tok")
@@ -137,7 +137,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentInText()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token"),
@@ -150,7 +150,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentInVariableDefinition()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")
@@ -169,7 +169,7 @@ namespace Whiteparse.Test
         [Fact]
         public void CommentInVariableDefinitionMulti()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("token")

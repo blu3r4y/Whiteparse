@@ -47,7 +47,7 @@ namespace Whiteparse.Examples
 
                     try
                     {
-                        Specification spec = Specification.FromString(line);
+                        Template spec = Template.FromString(line);
                         Console.WriteLine(spec);
                     }
                     catch (ParseException e)

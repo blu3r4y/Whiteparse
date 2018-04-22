@@ -9,9 +9,9 @@ using static Sprache.Parse;
 namespace Whiteparse.Grammar
 {
     /// <summary>
-    /// Parses the Whiteparse grammar to a <see cref="Specification"/> object
+    /// Parses the Whiteparse grammar to a <see cref="Template"/> object
     /// </summary>
-    public static class Parser
+    public static class TemplateParser
     {
         /// <summary>Every token has to start with this character. Variables will start with two occurences of this character.</summary>
         private const char TOKEN_PREFIX = '$';
@@ -109,7 +109,7 @@ namespace Whiteparse.Grammar
                         .Optional()
                 from right in Char('}')
                 select (range, delimiters.GetOrDefault()?.ToArray()))
-            .Named("range and/or delimiter specification");
+            .Named("range and/or delimiter template");
 
         private static readonly Parser<InlineListToken> InlineListToken = (
                 from left in Char('[')
@@ -236,31 +236,31 @@ namespace Whiteparse.Grammar
                 .XOr(CharExcept(chars).Except(LineEnd).Once().Text());
         }
 
-        /* grammar specification */
+        /* grammar template */
 
-        private static readonly Parser<Specification> Specification = (
+        private static readonly Parser<Template> Template = (
                 from elements in Token
                     .Or<object>(Variable)
                     .XOr(Text)
                     .SuperToken().Many().Optional()
-                select new Specification(elements.GetOrDefault().OfType<Token>().ToList(),
+                select new Template(elements.GetOrDefault().OfType<Token>().ToList(),
                     elements.GetOrDefault().OfType<Variable>()))
             .SuperToken().End()
-            .Named("grammar specification");
+            .Named("grammar template");
 
         /// <summary>
-        /// Parse the grammar specification from text input to a <see cref="Specification"/> object
+        /// Parse the grammar template from text input to a <see cref="Template"/> object
         /// </summary>
         /// <exception cref="GrammarException">An error occured during grammar parsing or semantic resolution</exception>
-        public static Specification Parse(string input)
+        public static Template Parse(string input)
         {
             try
             {
-                return Specification.Parse(input);
+                return Template.Parse(input);
             }
             catch (ParseException e)
             {
-                throw new GrammarException("An error occurred while parsing the grammar specification. " + e.Message, e);
+                throw new GrammarException("An error occurred while parsing the grammar template. " + e.Message, e);
             }
         }
     }

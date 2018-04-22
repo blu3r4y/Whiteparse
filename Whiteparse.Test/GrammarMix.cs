@@ -15,7 +15,7 @@ namespace Whiteparse.Test
         [Fact]
         public void SingleNamedToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("numLocations", TokenType.Int, true),
@@ -49,7 +49,7 @@ namespace Whiteparse.Test
         [Fact]
         public void InvalidTrailingDotInStructuredToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken(new[] {"a", "b", "c"}),
@@ -63,7 +63,7 @@ namespace Whiteparse.Test
         [Fact]
         public void MultipleDotsInIdentifier()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("a"),
@@ -77,7 +77,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenInVariable()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("size"),
@@ -97,7 +97,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ListTokenForVariable()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("size"),
@@ -118,7 +118,7 @@ namespace Whiteparse.Test
         [Fact]
         public void WhiteSpacedListToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("size"),
@@ -135,7 +135,7 @@ namespace Whiteparse.Test
         [Fact]
         public void InlineListWithListTokenExtension()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new ListToken(
@@ -153,7 +153,7 @@ namespace Whiteparse.Test
         [Fact]
         public void TokenAfterVariable()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("b")
@@ -173,7 +173,7 @@ namespace Whiteparse.Test
         [Fact]
         public void LiteralAfterVariable()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new LiteralToken("a")

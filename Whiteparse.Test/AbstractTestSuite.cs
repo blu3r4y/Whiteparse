@@ -20,15 +20,15 @@ namespace Whiteparse.Test
 
         protected static void ParseGrammer(string grammar)
         {
-            Specification.FromString(grammar);
+            Template.FromString(grammar);
         }
 
-        protected void CompareGrammar(string grammar, Specification expectedSpecification)
+        protected void CompareGrammar(string grammar, Template expectedTemplate)
         {
-            Specification parsed = Specification.FromString(grammar);
+            Template parsed = Template.FromString(grammar);
 
             output.WriteLine(parsed.ToString());
-            parsed.WithDeepEqual(expectedSpecification).IgnoreSourceProperty(e => e.GlobalScope).Assert();
+            parsed.WithDeepEqual(expectedTemplate).IgnoreSourceProperty(e => e.GlobalScope).Assert();
         }
 
         protected void FailGrammar(string grammar)
@@ -37,7 +37,7 @@ namespace Whiteparse.Test
             {
                 try
                 {
-                    Specification parsed = Specification.FromString(grammar);
+                    Template parsed = Template.FromString(grammar);
 
                     // print additional details if the parsing indeed worked
                     output.WriteLine("Parsing should have thrown an exception, but this object was parsed successfully:");
@@ -52,16 +52,16 @@ namespace Whiteparse.Test
             });
         }
 
-        /* Utils for the Parser */
+        /* Utils for the TemplateParser */
 
         protected static void ParseInput(string grammar, string input)
         {
-            Parser.FromSpecificationString(grammar).ParseObject(input);
+            Parser.ParseObject(grammar, input);
         }
 
         protected void CompareResult(string grammar, string input, object expectedObject)
         {
-            object parsed = Parser.FromSpecificationString(grammar).ParseObject(input);
+            object parsed = Parser.ParseObject(grammar, input);
 
             output.WriteLine(JsonConvert.SerializeObject(parsed, Formatting.Indented));
             parsed.ShouldDeepEqual(expectedObject);
@@ -69,7 +69,7 @@ namespace Whiteparse.Test
 
         protected void CompareResultJson(string grammar, string input, object expectedObject)
         {
-            string parsed = Parser.FromSpecificationString(grammar).ParseJson(input);
+            string parsed = Parser.ParseJson(grammar, input);
             object converted = JsonConvert.DeserializeObject(parsed) as JObject;
 
             output.WriteLine(JsonConvert.SerializeObject(parsed, Formatting.Indented));

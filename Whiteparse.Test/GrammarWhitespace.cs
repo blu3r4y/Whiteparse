@@ -15,7 +15,7 @@ namespace Whiteparse.Test
         [Fact]
         public void OnlyWhiteSpace()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>(),
                 new List<Variable>());
 
@@ -25,7 +25,7 @@ namespace Whiteparse.Test
         [Fact]
         public void SingleWhitespacedToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("whitespaced")
@@ -38,7 +38,7 @@ namespace Whiteparse.Test
         [Fact]
         public void WhitespaceTokenAndLiterals()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("whitesp"),
@@ -52,7 +52,7 @@ namespace Whiteparse.Test
         [Fact]
         public void ThreeWhitespacedTokens()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("white1"),
@@ -67,7 +67,7 @@ namespace Whiteparse.Test
         [Fact]
         public void LinebreakedWhitespaceTokens()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("white1"),
@@ -83,7 +83,7 @@ namespace Whiteparse.Test
         [Fact]
         public void LinebreakedIdentifier()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("whi"),
@@ -99,7 +99,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NoWhitespace()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("a"),
@@ -118,7 +118,7 @@ namespace Whiteparse.Test
         [Fact]
         public void MinimumWhiteSpace()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("numLocations", TokenType.Int, true),
@@ -149,7 +149,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NoWhiteSpaceNewLineToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NewLineToken(),
@@ -163,7 +163,7 @@ namespace Whiteparse.Test
         [Fact]
         public void RegExWithEscapedLineBreak()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new RegExToken("a\\r\\nb")
@@ -176,7 +176,7 @@ namespace Whiteparse.Test
         [Fact]
         public void InlineListAndTrailingToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new InlineListToken(new List<Token>
@@ -194,7 +194,7 @@ namespace Whiteparse.Test
         [Fact]
         public void InlineListAndLeadingToken()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("a"),
@@ -212,7 +212,7 @@ namespace Whiteparse.Test
         [Fact]
         public void DenseInlineList()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new InlineListToken(new List<Token>
@@ -230,7 +230,7 @@ namespace Whiteparse.Test
         [Fact]
         public void VariableWithLeadingLineContinuation()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("tok")
@@ -250,7 +250,7 @@ namespace Whiteparse.Test
         [Fact]
         public void VariableWithTrailingLineContinuation()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("tok")
@@ -270,7 +270,7 @@ namespace Whiteparse.Test
         [Fact]
         public void VariableWithEmptyLineContinuations()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("tok")
@@ -290,7 +290,7 @@ namespace Whiteparse.Test
         [Fact]
         public void MultiLineWhiteSpaceWithComments()
         {
-            var expected = new Specification(
+            var expected = new Template(
                 new List<Token>
                 {
                     new NamedToken("a"),

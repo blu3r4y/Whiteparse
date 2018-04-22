@@ -6,9 +6,9 @@ using Whiteparse.Grammar.Tokens;
 namespace Whiteparse.Grammar
 {
     /// <summary>
-    /// Represents a Whiteparse grammar specification
+    /// Represents a Whiteparse grammar, parsed by the <see cref="TemplateParser"/>
     /// </summary>
-    public class Specification
+    public class Template
     {
         /// <summary>
         /// The list of tokens which make up the Whiteparse grammar
@@ -27,26 +27,26 @@ namespace Whiteparse.Grammar
 
         /// <summary>
         /// Create a new Whiteparse grammer by a list of tokens and variables.
-        /// The constructor will also test the semantics of this <see cref="Specification"/>
+        /// The constructor will also test the semantics of this <see cref="Template"/>
         /// and only create the object on a positive result.
         /// </summary>
         /// <param name="tokens">A list of tokens to be parsed</param>
         /// <param name="variables">A list of variables (optional)</param>
         /// <exception cref="GrammarException">If an error occurs during semantic resolution</exception>
-        public Specification(IList<Token> tokens = null, IEnumerable<Variable> variables = null)
+        public Template(IList<Token> tokens = null, IEnumerable<Variable> variables = null)
         {
             Tokens = tokens ?? new List<Token>();
             Variables = new HashSet<Variable>(variables ?? new HashSet<Variable>());
             
-            GlobalScope = SemanticResolution.Resolve(Tokens, Variables);
+            GlobalScope = Resolver.Resolve(Tokens, Variables);
         }
 
         /// <summary>
-        /// Parse the grammar specification from text input to a <see cref="Specification"/> object
+        /// Parse the grammar template from text input to a <see cref="Template"/> object
         /// </summary>
-        public static Specification FromString(string input)
+        public static Template FromString(string input)
         {
-            return Parser.Parse(input);
+            return TemplateParser.Parse(input);
         }
 
         public override string ToString()
