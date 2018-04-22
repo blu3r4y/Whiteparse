@@ -87,7 +87,7 @@ namespace Whiteparse.Test
                 {
                     new Variable("var", new List<Token>
                     {
-                        new ListToken(new NamedToken("element"), new NamedToken("size")),
+                        new ListToken(new NamedToken("element"), "size"),
                     })
                 });
 
@@ -102,7 +102,7 @@ namespace Whiteparse.Test
                 {
                     new NamedToken("size"),
                     new ListToken(
-                        new NamedToken("var"), new NamedToken("size"))
+                        new NamedToken("var"), "size")
                 },
                 new List<Variable>
                 {
@@ -124,12 +124,12 @@ namespace Whiteparse.Test
                     new NamedToken("size"),
                     new NamedToken("token"),
                     new LiteralToken("{"),
-                    new NamedToken("size"),
+                    new NamedToken("size2"),
                     new LiteralToken("}")
                 },
                 new List<Variable>());
 
-            CompareGrammar(@"$size $token \{$size\}", expected);
+            CompareGrammar(@"$size $token \{$size2\}", expected);
         }
 
         [Fact]

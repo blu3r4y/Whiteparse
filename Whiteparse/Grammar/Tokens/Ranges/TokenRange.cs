@@ -6,18 +6,18 @@
     public class TokenRange : IRangeSpecifier
     {
         /// <summary>
-        /// The parsed value of this <see cref="NamedToken"/> indicates how often the token will be repeated
+        /// The parsed value of the token with this name indicates how often something will be repeated
         /// </summary>
-        public NamedToken Reference { get; }
+        public string ReferencedName { get; }
 
-        public TokenRange(NamedToken reference)
+        public TokenRange(string referencedName)
         {
-            Reference = reference;
+            ReferencedName = referencedName;
         }
 
         public override string ToString()
         {
-            return $"TokenRange<{Reference}>";
+            return $"TokenRange<{ReferencedName}>";
         }
     }
 }

@@ -103,7 +103,7 @@ namespace Whiteparse.Grammar
                         .Or(Char('*').Return(AutomaticRange.FromType(AutomaticRangeType.Many))))
                     .XOr<IRangeSpecifier>(Number.Then(n => Return(new NumericRange(int.Parse(n)))))
                     .XOr(Char(TOKEN_PREFIX).Then(d =>
-                        Identifier.Then(name => Return(new TokenRange(new NamedToken(name))))))
+                        Identifier.Then(name => Return(new TokenRange(name)))))
                 from delimiters in
                     Char(':').Then(c => CharsExceptEscaped(':', '{', '}').AtLeastOnce().Text().DelimitedBy(Char(':')))
                         .Optional()

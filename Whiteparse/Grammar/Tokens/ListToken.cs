@@ -65,10 +65,10 @@ namespace Whiteparse.Grammar.Tokens
         /// Create a <see cref="ListToken"/> by repeating an inner token <see cref="repetitions"/> times
         /// </summary>
         /// <param name="innerToken">The token to be repeated</param>
-        /// <param name="reference">Repeat the inner token as often as the value of the parsed <see cref="reference"/> indicates</param>
+        /// <param name="referencedName">Repeat the inner token as often as the value of the parsed token named <see cref="referencedName"/> indicates</param>
         /// <param name="delimiters">Alternative delimiters (default is whitespace)</param>
-        public ListToken(Token innerToken, NamedToken reference, IEnumerable<string> delimiters = null)
-            : this(innerToken, new TokenRange(reference), delimiters)
+        public ListToken(Token innerToken, string referencedName, IEnumerable<string> delimiters = null)
+            : this(innerToken, new TokenRange(referencedName), delimiters)
         {
         }
 

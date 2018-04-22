@@ -365,7 +365,7 @@ namespace Whiteparse.Test
                 new List<Token>
                 {
                     new NamedToken("size"),
-                    new ListToken(new NamedToken("value"), new NamedToken("size"))
+                    new ListToken(new NamedToken("value"), "size")
                 },
                 new List<Variable>());
 
@@ -411,7 +411,7 @@ namespace Whiteparse.Test
                     new ListToken(
                         new ListToken(
                             new ListToken(
-                                new ListToken(new NamedToken("value"), 2), 4), new NamedToken("size")), AutomaticRangeType.Many)
+                                new ListToken(new NamedToken("value"), 2), 4), "size"), AutomaticRangeType.Many)
                 },
                 new List<Variable>());
 
