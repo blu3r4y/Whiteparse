@@ -124,11 +124,11 @@ namespace Whiteparse.Test
             var expected = new Template(
                 new List<Token>
                 {
-                    new RegExToken(@"\d+\(1\x")
+                    new RegExToken(@"\d+\(1\x43")
                 },
                 new List<Variable>());
 
-            CompareGrammar(@"$(\d+\(1\x)", expected);
+            CompareGrammar(@"$(\d+\(1\x43)", expected);
         }
 
         [Fact]
