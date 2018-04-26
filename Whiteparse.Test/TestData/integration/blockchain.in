@@ -1,0 +1,22 @@
+6
+0x00000010 1 0x00000001 origin 2 1 Amy 2 1504172978470
+0x00000011 1 0x00000002 origin 2 1 Andrew 2 1504172978471
+0x00000012 1 0x00000010 Amy 2 1 Andrew 2 1504172978477
+0x00000013 1 0x00000011 Andrew 1 1 Amy 1 1504172978478
+0x00000014 1 0x00000010 Amy 2 1 Andrew 2 1504172978479
+0x000000D3 3 0x000000A4 Crosby 9371 0x000000CB Crosby 759 0x000000D1 Crosby 580 2 Jeannie 5869 Allison 4841 1507495626
+4
+0b00000001 0b00000000 2 0x00000010 0x00000011 1504172978472
+0b00000002 0b00000001 1 0x00000012 1504172978478
+0b00000003 0b00000001 1 0x00000013 1504172978479
+0b00000004 0b00000003 1 0x00000014 1504172978490
+
+# <NumberOfTransactions> the number of transactions in the banking system
+# NumberOfTransactions lines: <TransactionID> <NumberOfInputs> NumberOfInputs * InputElement <NumberOfOutputs>
+# NumberOfOutputs * OutputElement <TransactionSubmitTime>
+# InputElement: <InputTransactionID> <InputTransactionOwner> <InputTransactionAmount>
+# OutputElement: <OutputTransactionOwner> <OutputTransactionAmount>
+# <NumberOfBlocks> the number of blocks in the banking system
+# 
+# NumberOfBlocks lines: <BlockId> <PreviousBlockId> <NumberOfTransactions> NumberOfTransactions *
+# <TransactionId> <BlockCreationTime>

@@ -1,0 +1,55 @@
+{
+    "cacheSize": 100,
+    "sizes": [
+        50,
+        50,
+        80,
+        30,
+        110
+    ],
+    "endpoints": [
+        {
+            "latency": 1000,
+            "caches": [
+                {
+                    "id": 0,
+                    "latency": 100
+                },
+                {
+                    "id": 2,
+                    "latency": 200
+                },
+                {
+                    "id": 1,
+                    "latency": 300
+                }
+            ]
+        },
+        {
+            "latency": 500,
+            "caches": []
+        }
+    ],
+    "requests": [
+        {
+            "video": 3,
+            "endpointId": 0,
+            "num": 1500
+        },
+        {
+            "video": 0,
+            "endpointId": 1,
+            "num": 1000
+        },
+        {
+            "video": 4,
+            "endpointId": 0,
+            "num": 500
+        },
+        {
+            "video": 1,
+            "endpoint": 0,
+            "num": 1000
+        }
+    ]
+}

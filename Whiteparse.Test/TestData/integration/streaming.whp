@@ -1,0 +1,9 @@
+$?numVideos $?numEndpoints $?numRequests $?numCaches $cacheSize
+$size{$numVideos}
+$endpoint{$numEndpoints}
+
+    $$endpoint = $latency $?numCaches $cache{$numCaches}
+    $$cache = $id $latency
+    
+$request{$numRequests}
+    $$request = $video $endpointId $num

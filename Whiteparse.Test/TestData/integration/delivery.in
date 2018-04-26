@@ -1,0 +1,37 @@
+100 100 3 50 500
+3
+100 5 450
+2
+0 0
+5 1 0
+5 5
+0 10 2
+3
+1 1
+2
+2 0
+3 3
+1
+0
+5 6
+1
+2
+
+# 100 rows, ​ 100 columns, 3 drones, 50 turns, max payload is 500u
+# There are 3 different product types.
+# The product types weigh: 100u, 5u, 450u.
+# There are 2 warehouses.
+# First warehouse is located at [0, 0].
+# It stores 5 items of product 0 and 1 of product 1.
+# Second warehouse is located at [5, 5].
+# It stores 10 items of product 1 and 2 items of product 2.
+# There are 3 orders.
+# First order to be delivered to [1, 1].
+# First order contains 2 items.
+# Items of product types: 2, 0.
+# Second order to be delivered to [3, 3].
+# Second order contains 1 item.
+# Items of product types: 0
+# Third order to be delivered to [5, 6]
+# Third order contains 1 item.
+# Items of product types: 2.

@@ -1,0 +1,33 @@
+{
+    "rows": 2,
+    "slots": 5,
+    "pools": 2,
+    "unavailable": [
+        [
+            0,
+            0
+        ]
+    ],
+    "servers": [
+        {
+            "size": 3,
+            "capacity": 10
+        },
+        {
+            "size": 3,
+            "capacity": 10
+        },
+        {
+            "size": 2,
+            "capacity": 5
+        },
+        {
+            "size": 1,
+            "capacity": 5
+        },
+        {
+            "size": 1,
+            "capacity": 1
+        }
+    ]
+}

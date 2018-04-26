@@ -1,0 +1,15 @@
+$?numLocations
+$location{$numLocations}
+
+    $$location = $name $pos
+    $$pos = [$x $y]
+     
+$?numJourneys
+$journey{$numJourneys}
+
+    $$journey = $from $to $time
+    
+$hub
+$minFasterJourneys
+$maximumLength
+

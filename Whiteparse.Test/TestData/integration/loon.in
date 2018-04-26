@@ -1,0 +1,29 @@
+3 5 3
+2 1 1 5
+1 2
+0 2
+0 4
+0 1 0 1 0 1 0 1 0 1
+0 1 0 1 0 1 0 1 0 1
+0 1 0 1 0 1 0 1 0 1
+-1 0 -1 0 -1 0 -1 0 -1 0
+-1 0 -1 0 -1 0 -1 0 -1 0
+-1 0 -1 0 -1 0 -1 0 -1 0
+0 1 0 1 0 1 0 2 0 1
+0 2 0 1 0 2 0 3 0 2
+0 1 0 1 0 1 0 2 0 1
+
+# 3 rows, 5 columns, 3 altitudes.
+# 2 target cells, coverage radius of 1, 1 balloon, 5 turns.
+# Starting cell at the center of the map (row 1, column 2).
+# Target cell in the center of row 0.
+# Target cell at the end of the row 0.
+# Wind at the altitude 1 only moves east.
+# ..
+# ..
+# Wind at the altitude 2 only moves north.
+# ..
+# ..
+# Wind at the altitude 3 only moves east.
+# And in some places it is stronger than wind at altitude 1,
+# ..

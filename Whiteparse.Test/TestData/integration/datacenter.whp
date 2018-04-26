@@ -1,0 +1,6 @@
+$rows $slots $?numUnavailable $pools $?numServers
+$unavailable{$numUnavailable}
+$server{$numServers}
+
+$$unavailable = [$x $y]
+$$server = $size $capacity

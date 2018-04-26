@@ -1,0 +1,59 @@
+{
+    "locations": [
+        {
+            "name": "Prague",
+            "pos": [
+                0,
+                286100
+            ]
+        },
+        {
+            "name": "Brno",
+            "pos": [
+                152440,
+                194430
+            ]
+        },
+        {
+            "name": "Vienna",
+            "pos": [
+                126350,
+                78010
+            ]
+        },
+        {
+            "name": "Bratislava",
+            "pos": [
+                183680,
+                71710
+            ]
+        },
+        {
+            "name": "Budapest",
+            "pos": [
+                318860,
+                0
+            ]
+        }
+    ],
+    "journeys": [
+        {
+            "from": "Prague",
+            "to": "Bratislava",
+            "time": 14564
+        },
+        {
+            "from": "Bratislava",
+            "to": "Vienna",
+            "time": 3290
+        },
+        {
+            "from": "Vienna",
+            "to": "Budapest",
+            "time": 8654
+        }
+    ],
+    "hub": "Bratislava",
+    "minFasterJourneys": 3,
+    "maximumLength": 500000
+}

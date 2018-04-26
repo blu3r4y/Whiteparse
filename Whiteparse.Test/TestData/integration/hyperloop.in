@@ -1,0 +1,21 @@
+5
+Prague 0 286100
+Brno 152440 194430
+Vienna 126350 78010
+Bratislava 183680 71710
+Budapest 318860 0
+3
+Prague Bratislava 14564
+Bratislava Vienna 3290
+Vienna Budapest 8654
+Bratislava
+3
+500000
+
+# Single line: <NumberOfLocations>
+# NumberOfLocations lines: <LocationName> <LocationX> <LocationY>
+# Single line: <NumberOfJourneys>
+# NumberOfJourneys lines: <LocationName> <LocationName> <CurrentTime>
+# Single line: <HubLocationName>
+# Single line: <N>
+# Single line: <D>

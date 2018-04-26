@@ -1,0 +1,35 @@
+{
+    "time": 3000,
+    "numCars": 2,
+    "startIndex": 0,
+    "junctions": [
+        [
+            48.8582,
+            2.2945
+        ],
+        [
+            50.0,
+            3.09
+        ],
+        [
+            51.424242,
+            3.02
+        ]
+    ],
+    "streets": [
+        {
+            "from": 0,
+            "to": 1,
+            "direction": 1,
+            "time": 30,
+            "length": 250
+        },
+        {
+            "from": 1,
+            "to": 2,
+            "direction": 2,
+            "time": 45,
+            "length": 200
+        }
+    ]
+}

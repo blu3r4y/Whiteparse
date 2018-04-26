@@ -1,0 +1,15 @@
+$?numRows $?numCols $drones $turns $payload
+$?numItems
+$weight{$numItems}
+$?numWarehouses
+$warehouse{$numWarehouses}
+
+    $$warehouse = $location $storage
+    $$location = [$a $b]
+    $$storage = $item{$numItems}
+
+$?numOrders
+$order{$numOrders}
+
+    $$order = $destination $?numItems $item{$numItems}
+    $$destination = [$a $b]

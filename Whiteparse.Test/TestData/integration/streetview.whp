@@ -1,0 +1,5 @@
+$?numJunctions $?numStreets $time $numCars $startIndex
+$junction{$numJunctions}
+    $$junction = [$x $y]
+$street{$numStreets}    
+    $$street = $from $to $direction $time $length

@@ -1,0 +1,12 @@
+$?numTransactions
+$transaction{$numTransactions}
+
+    $$transaction = $id $?numInputs $input{$numInputs} $?numOutputs $output{$numOutputs} $timestamp
+    
+    $$input = $id $owner $amount
+    $$output = $owner $amount
+
+$?numBlocks
+$block{$numBlocks}
+
+    $$block = $id $previous $?numIds $blockTransaction{$numIds} $timestamp

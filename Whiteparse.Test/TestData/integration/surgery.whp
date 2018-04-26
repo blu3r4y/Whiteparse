@@ -1,0 +1,11 @@
+dimension=$dimension
+nrOfX=$nrOfX
+nrOfY=$nrOfY
+bodyX=$bodyX
+bodyY=$bodyY
+bodyCGx=$bodyCGx
+bodyCGy=$bodyCGy
+maxSticks=$maxSticks
+shape=$shape{*:,}
+
+$$dimension = $(\d)d

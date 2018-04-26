@@ -1,0 +1,9 @@
+player 36 36
+cpu 5 12
+ball 313.39 316.98 -7.22 1.42
+update
+
+# player <pos> <move>
+# cpu <pos> <move>
+# ball <x> <y> <vx> <vy>
+# update

@@ -1,0 +1,16 @@
+$duration
+$?numSatellites
+$satellite{$numSatellites}
+
+    $$satellite = $position $velocity $orientation
+    $$position = [$x $y]
+    $$orientation = [$x $y]
+
+$?numImages
+$image{$numImages}
+
+    $$image = $value $?numLocations $?numAvailable \
+        $location{$numLocations} $available{$numAvailable}
+        
+    $$location = [$x $y]
+    $$available = [$from $to] 

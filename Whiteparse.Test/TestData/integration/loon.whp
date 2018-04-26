@@ -1,0 +1,12 @@
+$?numRows $?numColumns $?numAltitudes
+$?numTargets $coverage $balloons $turns
+$start
+$target{$numTargets}
+$altitude{$numAltitudes}
+
+$$start = [$x $y]
+$$target = [$a $b]
+
+$$altitude = $row{$numRows}
+$$row = $point{$numColumns} 
+$$point = [$x $y]

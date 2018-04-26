@@ -1,0 +1,9 @@
+$rows $cols $radius $.
+$costBackbone $costRouter $budget $.
+$initial
+$grid
+
+$$initial = [$x $y]
+
+$$grid = $row{$rows}
+$$row = $(\w){$cols}

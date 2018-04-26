@@ -1,0 +1,7 @@
+0 100 0 200
+100
+20
+
+# xmin xmax ymin ymax constrained area
+# N the number of drones available (always 1 for this level)
+# height minimum height to climb

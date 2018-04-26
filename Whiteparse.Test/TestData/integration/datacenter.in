@@ -1,0 +1,15 @@
+2 5 1 2 5
+0 0
+3 10
+3 10
+2 5
+1 5
+1 1
+
+# 2 rows of 5 slots each, 1 slot unavailable, 2 pools and 5 servers.
+# Coordinates of the first and only unavailable slot.
+# First server takes three slots and has a capacity of 10.
+# So does the second one.
+# The third one takes two slots and has a capacity of 5.
+# The fourth one takes just one slot and has a capacity of 5.
+# The fifth one takes just one slot too and has a capacity of 1.

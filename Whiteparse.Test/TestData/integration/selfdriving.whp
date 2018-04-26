@@ -1,0 +1,6 @@
+$rows $columns $vehicles $?numRides $bonus $steps
+$ride{$numRides}
+
+    $$ride = $from $to $earliest $latest
+    $$from = [$x $y]
+    $$to = [$x $y]

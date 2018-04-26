@@ -1,0 +1,4 @@
+player $player.pos $player.move
+cpu $cpu.pos $cpu.move
+ball $ball.x $ball.y $ball.vx $ball.vy
+update
