@@ -1,6 +1,6 @@
-﻿using DeepEqual.Syntax;
+﻿using System.Globalization;
+using DeepEqual.Syntax;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Whiteparse.Grammar;
 using Xunit;
 using Xunit.Abstractions;
@@ -28,7 +28,7 @@ namespace Whiteparse.Test
             Template parsed = Template.FromString(grammar);
 
             output.WriteLine(parsed.ToString());
-            parsed.WithDeepEqual(expectedTemplate).IgnoreSourceProperty(e => e.GlobalScope).Assert();
+            parsed.ShouldDeepEqual(expectedTemplate);
         }
 
         protected void FailGrammar(string grammar)
@@ -54,14 +54,16 @@ namespace Whiteparse.Test
 
         /* Utils for the TemplateParser */
 
-        protected static void ParseInput(string grammar, string input)
+        protected void ParseInput(string grammar, string input)
         {
-            Parser.ParseObject(grammar, input);
+            object parsed = Whiteparser.ParseObject(grammar, input, CultureInfo.InvariantCulture);
+            
+            output.WriteLine(JsonConvert.SerializeObject(parsed, Formatting.Indented));
         }
 
         protected void CompareResult(string grammar, string input, object expectedObject)
         {
-            object parsed = Parser.ParseObject(grammar, input);
+            object parsed = Whiteparser.ParseObject(grammar, input, CultureInfo.InvariantCulture);
 
             output.WriteLine(JsonConvert.SerializeObject(parsed, Formatting.Indented));
             parsed.ShouldDeepEqual(expectedObject);
@@ -69,10 +71,10 @@ namespace Whiteparse.Test
 
         protected void CompareResultJson(string grammar, string input, object expectedObject)
         {
-            string parsed = Parser.ParseJson(grammar, input);
-            object converted = JsonConvert.DeserializeObject(parsed) as JObject;
+            string parsed = Whiteparser.ParseJson(grammar, input, CultureInfo.InvariantCulture);
+            var converted = JsonConvert.DeserializeObject(parsed);
 
-            output.WriteLine(JsonConvert.SerializeObject(parsed, Formatting.Indented));
+            output.WriteLine(JsonConvert.SerializeObject(converted, Formatting.Indented));
             converted.ShouldDeepEqual(expectedObject);
         }
     }

@@ -23,7 +23,7 @@ namespace Whiteparse.Grammar
         /// <summary>
         /// Holds the semantic scope tree
         /// </summary>
-        public Scope GlobalScope { get; }
+        internal Scope GlobalScope { get; }
 
         /// <summary>
         /// Create a new Whiteparse grammer by a list of tokens and variables.

@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Whiteparse.Grammar
 {
-    public static class Utils
+    internal static class Utils
     {
-        public static string ToIndentedBlock(this IEnumerable<string> elements, int level = 1)
+        internal static string ToIndentedBlock(this IEnumerable<string> elements, int level = 1)
         {
             var spaces = new string(' ', level * 3);
             return "\n" +
@@ -21,7 +21,7 @@ namespace Whiteparse.Grammar
         /// <param name="enumerable">The enumerable which may contains duplicates</param>
         /// <typeparam name="T">The element type to be compared</typeparam>
         /// <returns>A list holding only duplicate entries</returns>
-        public static IEnumerable<T> SelectDuplicates<T>(this IEnumerable<T> enumerable)
+        internal static IEnumerable<T> SelectDuplicates<T>(this IEnumerable<T> enumerable)
         {
             return enumerable
                 .GroupBy(x => x)

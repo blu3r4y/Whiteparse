@@ -7,7 +7,7 @@ namespace Whiteparse.Grammar.Semantics
     /// <summary>
     /// Performs both a static analysis of the grammar and some semantic resolutions  
     /// </summary>
-    public static class Resolver
+    internal static class Resolver
     {
         /// <summary>
         /// Check semantic rules in the token and variable definitions and return a scope tree
@@ -16,7 +16,7 @@ namespace Whiteparse.Grammar.Semantics
         /// <param name="variables">A list of variables</param>
         /// <returns>The scope tree, which can be used for traversing the grammar</returns>
         /// <exception cref="GrammarException">On semantic errors</exception>
-        public static Scope Resolve(IList<Token> tokens, ISet<Variable> variables)
+        internal static Scope Resolve(IList<Token> tokens, ISet<Variable> variables)
         {
             // check for named token duplicates in global scope
             List<string> duplicateNamedTokens = GetDuplicateNamedTokens(tokens);
@@ -50,7 +50,7 @@ namespace Whiteparse.Grammar.Semantics
 
             // build a scope tree (which checks some semantics during the build process)
             var scope = new Scope(tokens);
-            
+
             return scope;
         }
 
