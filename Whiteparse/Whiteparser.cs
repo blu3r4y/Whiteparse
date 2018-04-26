@@ -50,6 +50,18 @@ namespace Whiteparse
         }
 
         /// <summary>
+        /// Parse the input text and cast the result to a static type
+        /// </summary>
+        /// <param name="input">The input text to parse</param>
+        /// <typeparam name="T">The resulting object type</typeparam>
+        /// <returns>An instance of the specified type, populated with the parsed values</returns>
+        public T ParseObject<T>(IEnumerable<char> input)
+        {
+            // TODO: thats a lot of parsing, but this solution requires just one line and that's cool :D
+            return JsonConvert.DeserializeObject<T>(ParseJson(input));
+        }
+
+        /// <summary>
         /// Parse the input text to a json string
         /// </summary>
         /// <param name="input">The input text to parse</param>
@@ -60,7 +72,7 @@ namespace Whiteparse
             var result = ParseObject(input);
             return JsonConvert.SerializeObject(result, indented ? Formatting.Indented : Formatting.None);
         }
-        
+
         /* some convenience functions for one-line-parsing */
 
         public static Whiteparser FromTemplate(Template template, CultureInfo culture = null)
@@ -83,14 +95,24 @@ namespace Whiteparse
             return FromTemplate(template, culture).ParseObject(input);
         }
 
-        public static string ParseJson(Template template, IEnumerable<char> input, CultureInfo culture = null)
+        public static T ParseObject<T>(Template template, IEnumerable<char> input, CultureInfo culture = null)
         {
-            return FromTemplate(template, culture).ParseJson(input);
+            return FromTemplate(template, culture).ParseObject<T>(input);
         }
 
-        public static string ParseJson(string template, IEnumerable<char> input, CultureInfo culture = null)
+        public static T ParseObject<T>(string template, IEnumerable<char> input, CultureInfo culture = null)
         {
-            return FromTemplate(template, culture).ParseJson(input);
+            return FromTemplate(template, culture).ParseObject<T>(input);
+        }
+
+        public static string ParseJson(Template template, IEnumerable<char> input, CultureInfo culture = null, bool indented = false)
+        {
+            return FromTemplate(template, culture).ParseJson(input, indented);
+        }
+
+        public static string ParseJson(string template, IEnumerable<char> input, CultureInfo culture = null, bool indented = false)
+        {
+            return FromTemplate(template, culture).ParseJson(input, indented);
         }
 
         /* helpers */
