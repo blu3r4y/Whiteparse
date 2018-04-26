@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 using Sprache;
 using Whiteparse.Grammar;
 
-namespace Whiteparse.Examples
+namespace Whiteparse.Cli
 {
-    internal static class Program
+    internal static class GrammarShell
     {
-        private static void Main()
+        internal static void Repl()
         {
             Console.WriteLine("Whiteparse Grammar Shell");
             Console.WriteLine("- Write 'exit' to leave this shell.");
