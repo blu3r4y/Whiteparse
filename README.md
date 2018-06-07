@@ -1,3 +1,7 @@
+| :warning: **This project is in a very early development stage.** |
+|--------------|
+| Whiteparse is not yet ready to be used in a productive environment. The API might change heavily, the documentation is not synced up and some functionality is not implemented. Feel free to try out Whiteparse or even extend it from here on, but do not use it for serious work yet. Whiteparse will eventually reach a stable state, with a stable API, releases and NuGet packages. If you are still interested, feel free to clone the repository and experiment with the work that is implemented already, but don't blame me if something breaks for you in the future. |
+
 # Whiteparse
 
 Whiteparse is a data parser and reverse templating engine, written in C# and optimized for parsing whitespace-delimited text to JSON objects.
