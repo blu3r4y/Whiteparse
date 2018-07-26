@@ -212,11 +212,14 @@ namespace Whiteparse
             }
 
             // find a name
-            string name = "listToken";
-            if (node.InnerScope.Count == 1)
+            Scope.Node innerNode = node;
+            while (innerNode.HasInnerScope)
             {
-                if (node.InnerScope.First().Token is NamedToken named) name = named.Name + "s";
+                innerNode = innerNode.InnerScope.First();
             }
+
+            string name = "listToken";
+            if (innerNode.Token is NamedToken named) name = named.Name + "s";
 
             dict.Add(name, expandedList);
         }
