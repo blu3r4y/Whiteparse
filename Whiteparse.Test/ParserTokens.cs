@@ -158,7 +158,6 @@ namespace Whiteparse.Test
         {
             var expected = new
             {
-                typed = 1337
             };
 
             CompareResult("$?named $?[int]typed", "ignored 1337", expected);
