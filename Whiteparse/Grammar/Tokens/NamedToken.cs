@@ -12,7 +12,7 @@ namespace Whiteparse.Grammar.Tokens
         Auto,
         Int,
         Bool,
-        Float,
+        Double,
         String,
     }
 

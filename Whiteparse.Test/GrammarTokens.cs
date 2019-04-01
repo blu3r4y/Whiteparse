@@ -124,13 +124,13 @@ namespace Whiteparse.Test
                 new List<Token>
                 {
                     new NamedToken("token1", TokenType.Int),
-                    new NamedToken("token2", TokenType.Float),
+                    new NamedToken("token2", TokenType.Double),
                     new NamedToken("token3", TokenType.String),
                     new NamedToken("token4", TokenType.Bool)
                 },
                 new List<Variable>());
 
-            CompareGrammar("$[int]token1 $[float]token2 $[string]token3 $[bool]token4", expected);
+            CompareGrammar("$[int]token1 $[double]token2 $[string]token3 $[bool]token4", expected);
         }
 
         [Fact]

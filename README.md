@@ -48,11 +48,11 @@ Using the grammer `$pos.x $pos.y $pos.vx $pos.vy`, Whiteparse will parse this ob
 ### Typed Tokens
 
 The target data type will be determined automatically.
-However, one can specify the data type of variable names explicitly to `int`, `float`, `string` or `bool`.
+However, one can specify the data type of variable names explicitly to `int`, `double`, `string` or `bool`.
 
 Type specifiers need to be appended directly before the variable name.
 
-    $[int]a $[float]b $[string]c $[bool]d
+    $[int]a $[double]b $[string]c $[bool]d
 
 ### Ignored Tokens
 

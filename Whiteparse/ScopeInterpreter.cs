@@ -266,7 +266,7 @@ namespace Whiteparse
                 case TokenType.Auto:
                     if (int.TryParse(input, out int autoInt)) result = autoInt;
                     else if (long.TryParse(input, out long autoLong)) result = autoLong;
-                    else if (TryParseFloat(input, out float autoFloat)) result = autoFloat;
+                    else if (TryParseDouble(input, out double autoDouble)) result = autoDouble;
                     else if (bool.TryParse(input, out bool autoBool)) result = autoBool;
                     else result = input;
                     break;
@@ -282,9 +282,9 @@ namespace Whiteparse
                     else throw new ParserException($"Could not parse '{input}' to expected type {TokenType.Bool}.");
                     break;
 
-                case TokenType.Float:
-                    if (TryParseFloat(input, out float parsedFloat)) result = parsedFloat;
-                    else throw new ParserException($"Could not parse '{input}' to expected type {TokenType.Float}.");
+                case TokenType.Double:
+                    if (TryParseDouble(input, out double parsedDouble)) result = parsedDouble;
+                    else throw new ParserException($"Could not parse '{input}' to expected type {TokenType.Double}.");
                     break;
 
                 case TokenType.String:
@@ -344,9 +344,9 @@ namespace Whiteparse
             throw new ParserException($"Referenced token '{name}' doesn't exist within the current scope.");
         }
 
-        private bool TryParseFloat(string s, out float result)
+        private bool TryParseDouble(string s, out double result)
         {
-            return float.TryParse(s, NumberStyles.Float | NumberStyles.AllowLeadingSign, _culture, out result);
+            return double.TryParse(s, NumberStyles.Float | NumberStyles.AllowLeadingSign, _culture, out result);
         }
     }
 }

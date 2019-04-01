@@ -87,7 +87,7 @@ namespace Whiteparse.Grammar
         private static readonly Parser<TokenType> TokenType = (
                 from left in Char('[')
                 from typeCode in String("int").Return(Tokens.TokenType.Int)
-                    .XOr(String("float").Return(Tokens.TokenType.Float))
+                    .XOr(String("double").Return(Tokens.TokenType.Double))
                     .XOr(String("string").Return(Tokens.TokenType.String))
                     .XOr(String("bool").Return(Tokens.TokenType.Bool))
                 from right in Char(']')

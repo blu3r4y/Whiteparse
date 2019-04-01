@@ -36,7 +36,7 @@ namespace Whiteparse.Test
         [Fact]
         public void NoClosingBracketOnType()
         {
-            FailGrammar("$[inttoken1 $[float]token2 $[string]token3");
+            FailGrammar("$[inttoken1 $[double]token2 $[string]token3");
         }
 
         [Fact]

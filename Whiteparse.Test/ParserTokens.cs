@@ -59,7 +59,7 @@ namespace Whiteparse.Test
         }
 
         [Fact]
-        public void ThreeFloatsAuto()
+        public void ThreeDoublesAuto()
         {
             var expected = new
             {
@@ -108,7 +108,7 @@ namespace Whiteparse.Test
                 d = true
             };
 
-            CompareResult("$[int]a $[float]b $[string]c $[bool]d",
+            CompareResult("$[int]a $[double]b $[string]c $[bool]d",
                 "42 13.37 Hello true", expected);
         }
 
