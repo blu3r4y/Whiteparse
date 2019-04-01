@@ -7,6 +7,6 @@
     <ProjectReference Include="..\Whiteparse\Whiteparse.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.2.1" />
+    <PackageReference Include="CommandLineParser" Version="2.4.3" />
   </ItemGroup>
 </Project>
