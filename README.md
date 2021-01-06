@@ -18,7 +18,7 @@ Consider the following input to the parser.
 
     1 2.3 abc z
 
-Using the grammer `$a $b $c $c`, Whiteparse will parse this object.
+Using the grammer `$a $b $c $d`, Whiteparse will parse this object.
 
     {
         "a": 1,
